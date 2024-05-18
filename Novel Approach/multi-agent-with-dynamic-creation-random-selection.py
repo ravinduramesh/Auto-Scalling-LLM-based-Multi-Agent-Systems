@@ -1,4 +1,5 @@
 import json
+import random
 
 from openai import OpenAI
 
@@ -57,12 +58,13 @@ def localizeMsgForAgent(agentName):
 
     return localizedMsg
 
-def askConversationMgtAgentToFindNextAgent():
-    formattedConversationMgtAgentPromptToFindNextAgent = conversationMgtAgentPromptToFindNextAgent.format(agentsList, globalAgentConversation)
-    messages = [{"role": "system", "content": conversationMgtAgentSystemPrompt}, {"role": "user", "content": formattedConversationMgtAgentPromptToFindNextAgent}]
-    content = callOpenAI(messages)
-    print("god-next-agent: " + content)
-    return content
+# random selection
+def askConversationMgtAgentToFindNextAgent(currentAgent):
+    randomNumber = random.randint(0, len(agentsList) - 1)
+    currentAgent = agentsList[randomNumber]
+    
+    print("god-next-agent: " + currentAgent)
+    return currentAgent
 
 def askConversationMgtAgentToConcludeConversation():
     formattedConversationMgtAgentPromptToAskForConclusion = conversationMgtAgentPromptToAskForConclusion.format(agentsList, globalAgentConversation)
@@ -94,19 +96,17 @@ def sendMsgForAgent(agentName):
 
 try:
     userMsg = getUserMsg()
-    newAgent = askConversationMgtAgentToAddNewAgent()
-    while newAgent != "No":
-        if newAgent not in agentsList:
+    nextAgentName = ""
+    while askConversationMgtAgentToConcludeConversation() == "No":
+        newAgent = askConversationMgtAgentToAddNewAgent()
+        if newAgent != "No" and (newAgent not in agentsList):
             agentsList.append(newAgent)
             newAgentSysPrompt = askConversationMgtAgentToGenerateSysPromptForNewAgent(newAgent)
             systemPromptDict[newAgent] = newAgentSysPrompt
-        newAgent = askConversationMgtAgentToAddNewAgent()
-    
-    while askConversationMgtAgentToConcludeConversation() == "No":
-        nextAgentName = askConversationMgtAgentToFindNextAgent()
+        nextAgentName = askConversationMgtAgentToFindNextAgent(nextAgentName)
         sendMsgForAgent(nextAgentName)
 except Exception as e:
     print(e)
 finally:
-    with open("messages-initial-auto-creation-agent-llm-selection.json", "w") as f:
+    with open("messages-dynamic-agent-creation-random-selection.json", "w") as f:
         f.write(json.dumps(globalAgentConversation))

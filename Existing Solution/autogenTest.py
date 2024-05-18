@@ -3,7 +3,7 @@ import json
 
 
 llm_config = {
-    "config_list": [{"model": "gpt-4-turbo-preview", "api_key": "api-key"}],
+    "config_list": [{"model": "gpt-4o", "api_key": "api-key"}],
 }
 
 patient = autogen.UserProxyAgent(
@@ -16,13 +16,13 @@ agentSystemPromptPrefix = " Give your ideas to add more information and insight 
 
 generalDoctor = autogen.AssistantAgent(
     name="GeneralDoctor",
-    system_message="You are a general doctor at the OPD ward who provides medical advice, and guidance on common health concerns. You have to offer reassurance and recommend further evaluation or consultation with specialists if necessary." + agentSystemPromptPrefix,
+    system_message="You are a general doctor at the OPD ward. You provide medical advice, and guidance on common health concerns. You have to offer reassurance and recommend further evaluation or consultation with specialists if necessary." + agentSystemPromptPrefix,
     llm_config=llm_config,
 )
 
 nurse = autogen.AssistantAgent(
     name="Nurse",
-    system_message="You are a nurse in an outpatient ward who provide compassionate and accurate information on post-treatment care, medication instructions, and recovery processes. Offer guidance for lifestyle modifications, preventive care and healthy lifestyle choices." + agentSystemPromptPrefix,
+    system_message="You are a nurse in an outpatient ward. You provide compassionate and accurate information on post-treatment care, medication instructions, and recovery processes. Offer guidance for lifestyle modifications, preventive care and healthy lifestyle choices." + agentSystemPromptPrefix,
     llm_config=llm_config,
 )
 
