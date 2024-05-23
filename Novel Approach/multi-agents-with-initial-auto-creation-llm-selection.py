@@ -61,28 +61,28 @@ def askConversationMgtAgentToFindNextAgent():
     formattedConversationMgtAgentPromptToFindNextAgent = conversationMgtAgentPromptToFindNextAgent.format(agentsList, globalAgentConversation)
     messages = [{"role": "system", "content": conversationMgtAgentSystemPrompt}, {"role": "user", "content": formattedConversationMgtAgentPromptToFindNextAgent}]
     content = callOpenAI(messages)
-    print("god-next-agent: " + content)
+    print("manager-next-agent: " + content)
     return content
 
 def askConversationMgtAgentToConcludeConversation():
     formattedConversationMgtAgentPromptToAskForConclusion = conversationMgtAgentPromptToAskForConclusion.format(agentsList, globalAgentConversation)
     messages = [{"role": "system", "content": conversationMgtAgentSystemPrompt}, {"role": "user", "content": formattedConversationMgtAgentPromptToAskForConclusion}]
     content = callOpenAI(messages)
-    print("god-conclusion: " + content)
+    print("manager-conclusion: " + content)
     return content
 
 def askConversationMgtAgentToAddNewAgent():
     formattedConversationMgtAgentPromptToAddNewAgent = conversationMgtAgentPromptToAddNewAgent.format(agentsList, location, globalAgentConversation)
     messages = [{"role": "system", "content": conversationMgtAgentSystemPrompt}, {"role": "user", "content": formattedConversationMgtAgentPromptToAddNewAgent}]
     content = callOpenAI(messages)
-    print("god-add-agent: " + content)
+    print("manager-add-agent: " + content)
     return content
 
 def askConversationMgtAgentToGenerateSysPromptForNewAgent(newAgentName):
     formattedConversationMgtAgentPromptToGenerateSysPromptForNewAgent = conversationMgtAgentPromptToGenerateSysPromptForNewAgent.format(newAgentName, location, systemPromptDict)
     messages = [{"role": "system", "content": conversationMgtAgentSystemPrompt}, {"role": "user", "content": formattedConversationMgtAgentPromptToGenerateSysPromptForNewAgent}]
     content = callOpenAI(messages) + agentSystemPromptPrefix
-    print("god-add-agent-prompt: " + content)
+    print("manager-add-agent-prompt: " + content)
     return content
 
 def sendMsgForAgent(agentName):
