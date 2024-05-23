@@ -23,7 +23,7 @@ conversationMgtAgentPromptToAskForConclusion = "We have agents: {} available. Th
 conversationMgtAgentPromptToFindNextAgent = "We have agents: {} available. The following conversation has happened among them. The conversation is formatted as objects that contain the role of the speaker and content of the speech. Which agent should talk next? Give only the agent name by one word without any explanation. For example, if you want the backend developer to talk, just type 'Backend-Developer'. Don't let the same agent to talk consecutively. \n\n {}"
 
 conversationMgtAgentPromptToAddNewAgent = "We have available agents: {}. The following conversation has happened among them. The conversation is formatted as objects that contain the role of the speaker and content of the speech. Suggest another LLM agent that should be in a {} to add a value to this conversation? Please give only one agent with its name by one word without any explanation. For exmaple, if you want to add a backend developer to the conversation, just type 'Backend-Developer'. Don't give agent names that are already available. If you don't need more LLM agents to be added, say 'No'. \n\n {}"
-conversationMgtAgentPromptToGenerateSysPromptForNewAgent = "Generate a system message for an LLM agent that act as a {} at a {}. The following is a set of agents and their system prompts. \n\n {}'"
+conversationMgtAgentPromptToGenerateSysPromptForNewAgent = "Generate a system message for an LLM agent that act as a {} at a {}. Give only the system prompt without any additional texts. The following is a sample set of agents and their system prompts. \n\n {}'"
 
 globalAgentConversation = []
 
