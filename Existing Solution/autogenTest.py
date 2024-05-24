@@ -44,7 +44,7 @@ gastroenterologist = autogen.AssistantAgent(
     llm_config=llm_config,
 )
 
-groupchat = autogen.GroupChat(agents=[patient, generalDoctor, nurse, radiologist, surgeon, gastroenterologist], messages=[], max_round=10, speaker_selection_method="round_robin")
+groupchat = autogen.GroupChat(agents=[patient, generalDoctor, nurse, radiologist, surgeon, gastroenterologist], messages=[], max_round=20, speaker_selection_method="round_robin")
 
 manager = autogen.GroupChatManager(groupchat=groupchat, llm_config=llm_config)
 
