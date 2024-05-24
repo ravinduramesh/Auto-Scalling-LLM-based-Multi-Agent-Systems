@@ -25,7 +25,7 @@
     },
     {
         "role": "Emergency-Physician",
-        "content": "ER-Physician: Immediate medical evaluation in the ER is critical for suspected appendicitis. Prepare for possible imaging studies like an ultrasound or CT scan to accurately diagnose the issue. Do not consume food or liquids before assessment to avoid complications if surgery is needed. Get to the emergency room right away."
+        "content": "Immediate medical evaluation in the ER is critical for suspected appendicitis. Prepare for possible imaging studies like an ultrasound or CT scan to accurately diagnose the issue. Do not consume food or liquids before assessment to avoid complications if surgery is needed. Get to the emergency room right away."
     },
     {
         "role": "Gastroenterologist",

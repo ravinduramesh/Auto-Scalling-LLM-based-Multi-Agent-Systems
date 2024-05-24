@@ -65,7 +65,7 @@
     },
     {
         "role": "Gynecologist",
-        "content": "Patient: I have a huge pain in the right lower side of my tummy. Please help.\n\nReproductive issues should also be considered as potential causes for your pain. Conditions such as ovarian cysts, ectopic pregnancy, or pelvic inflammatory disease (PID) could also be responsible. For a more precise diagnosis, a pelvic exam and transvaginal ultrasound may be required. If you're of reproductive age, it's beneficial to note your menstrual cycle and any related symptoms. Immediate medical evaluation is essential to determine the correct diagnosis and treatment plan."
+        "content": "Reproductive issues should also be considered as potential causes for your pain. Conditions such as ovarian cysts, ectopic pregnancy, or pelvic inflammatory disease (PID) could also be responsible. For a more precise diagnosis, a pelvic exam and transvaginal ultrasound may be required. If you're of reproductive age, it's beneficial to note your menstrual cycle and any related symptoms. Immediate medical evaluation is essential to determine the correct diagnosis and treatment plan."
     },
     {
         "role": "Pediatrician",
@@ -85,7 +85,7 @@
     },
     {
         "role": "Neurologist",
-        "content": "Neurologist: Although less common, consider the possibility of referred pain from nerve-related issues such as radiculopathy, which can cause abdominal discomfort. Neurological examination and imaging of the spine might be necessary if no other source is identified. Additionally, certain neurological disorders can sometimes present atypically, underscoring the need for a comprehensive evaluation. Seek prompt attention to rule out these and other potential causes."
+        "content": "Although less common, consider the possibility of referred pain from nerve-related issues such as radiculopathy, which can cause abdominal discomfort. Neurological examination and imaging of the spine might be necessary if no other source is identified. Additionally, certain neurological disorders can sometimes present atypically, underscoring the need for a comprehensive evaluation. Seek prompt attention to rule out these and other potential causes."
     },
     {
         "role": "General-Practitioner",
