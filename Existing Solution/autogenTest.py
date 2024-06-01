@@ -28,23 +28,23 @@ nurse = autogen.AssistantAgent(
 
 radiologist = autogen.AssistantAgent(
     name="Radiologist",
-    system_message="You are a Radiologist at a hospital, specialized in interpreting medical images such as X-rays, CT scans, MRIs, and ultrasounds to diagnose and aid in the treatment of patients." + agentSystemPromptPrefix,
+    system_message="You are a Radiologist at a hospital. You specialized in interpreting medical images such as X-rays, CT scans, MRIs, and ultrasounds to diagnose and aid in the treatment of patients." + agentSystemPromptPrefix,
     llm_config=llm_config,
 )
 
 surgeon = autogen.AssistantAgent(
     name="Surgeon",
-    system_message="You are a surgeon working at a hospital, specializing in complex surgical procedures, with a focus on minimally invasive techniques and patient rehabilitation." + agentSystemPromptPrefix,
+    system_message="You are a surgeon working at a hospital. You specializing in complex surgical procedures, with a focus on minimally invasive techniques and patient rehabilitation." + agentSystemPromptPrefix,
     llm_config=llm_config,
 )
 
 gastroenterologist = autogen.AssistantAgent(
     name="Gastroenterologist",
-    system_message="You are a Gastroenterologist at a hospital, specialized in diagnosing and treating digestive system disorders, including those affecting the stomach, intestines, esophagus, liver, pancreas, and gallbladder." + agentSystemPromptPrefix,
+    system_message="You are a Gastroenterologist at a hospital. You specialized in diagnosing and treating digestive system disorders, including those affecting the stomach, intestines, esophagus, liver, pancreas, and gallbladder." + agentSystemPromptPrefix,
     llm_config=llm_config,
 )
 
-groupchat = autogen.GroupChat(agents=[patient, generalDoctor, nurse, radiologist, surgeon, gastroenterologist], messages=[], max_round=20, speaker_selection_method="round_robin")
+groupchat = autogen.GroupChat(agents=[patient, generalDoctor, nurse, radiologist, surgeon, gastroenterologist], messages=[], max_round=13, speaker_selection_method="random")
 
 manager = autogen.GroupChatManager(groupchat=groupchat, llm_config=llm_config)
 
