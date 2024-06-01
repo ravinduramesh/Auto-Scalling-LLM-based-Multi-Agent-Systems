@@ -44,7 +44,7 @@ gastroenterologist = autogen.AssistantAgent(
     llm_config=llm_config,
 )
 
-groupchat = autogen.GroupChat(agents=[patient, generalDoctor, nurse, radiologist, surgeon, gastroenterologist], messages=[], max_round=13, speaker_selection_method="random")
+groupchat = autogen.GroupChat(agents=[patient, generalDoctor, nurse, radiologist, surgeon, gastroenterologist], messages=[], max_round=20, speaker_selection_method="round_robin")
 
 manager = autogen.GroupChatManager(groupchat=groupchat, llm_config=llm_config)
 
@@ -71,5 +71,5 @@ for message in chat_result.chat_history:
                 "content": message['content'],
             }
         )
-with open("autogen-random-agent-selection-responses.json", "w") as f:
+with open("autogen-round-robin-agent-selection-responses.json", "w") as f:
     f.write(json.dumps(finalChat))
