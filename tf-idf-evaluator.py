@@ -94,7 +94,11 @@ tfidfMatrix = vectorizer.fit_transform(cleanedCorpus)
 
 # Create tfidf table to output
 outputVocabulary = vectorizer.get_feature_names_out()
-documentNames = range(len(corpus))
+documentNames = []
+for path in jsonFilePaths:
+    splitPath = path.split('/')
+    documentNames.append(splitPath[-2]+'/'+splitPath[-1])
+
 tfidfArray = tfidfMatrix.toarray()
 transposedTfidfArray = tfidfArray.T
 tfidfTable = pd.DataFrame(transposedTfidfArray, columns=documentNames, index=outputVocabulary)
