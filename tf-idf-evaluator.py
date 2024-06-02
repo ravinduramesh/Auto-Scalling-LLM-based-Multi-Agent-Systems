@@ -80,12 +80,14 @@ print("Text data is cleaned and stopwords are removed.")
 
 # Create the TF-IDF vectorizer
 vocab = {
-    # Suspecting Illnesses
-    "appendicitis", "gynecological", "kidney stone", "gastrointestinal", "colon cancer", "ileitis", "ovarian cysts", "crohn disease", "colitis", "diverticulitis", "urinary tract", "cardiovascular"
+    # Possible Illnesses
+    "appendicitis", "gynecological", "kidney stone", "gastrointestinal", "colon cancer", "ileitis", "ovarian", "crohn disease", "colitis", "diverticulitis", "urinary tract", "musculoskeletal issue", "hernia",
+    "cardiovascular", "gallbladder", "obstruction", "renal", "yersinia enterocolitica", "campylobacter jejuni", "ectopic pregnancy", "pelvic inflammatory", "endocrine disorder", "endometriosis", "inflammatory bowel",
     # Diagnostic Plans and Treatments 
-    "clinical examination", "blood test", "stool test", "ct", "urinalysis", "ultrasound", "surgery", "antibiotics", "pain management", "manage pain", "physical examination", "medical history", "endoscopic evaluation", "laparoscopy", "laparoscopic", "allergies", "anesthetic", "anesthesia",
+    "clinical examination", "blood test", "stool test", "ct", "urinalysis", "ultrasound", "surgery", "antibiotic", "pain management", "manage pain", "pain relief", "physical examination", "pysical exam", "medical history", "nephrology",
+    "endoscopic evaluation", "laparoscopy", "laparoscopic", "allergies", "anesthetic", "anesthesia", "pelvic exam", "neurological examination", "hormone level", "mri", "endoscopic evaluation", "probiotics", "urine",
     # Preventive Actions, Prior and Post Treatment Advice  
-    "diet", "dietary", "hydrated", "hydration", "rest", "symptom diary", "stress", "breathing", "deepbreathing", "relaxation", "relax"
+    "diet", "dietary", "hydrated", "hydration", "rest", "symptom diary", "stress", "breathing", "deepbreathing", "relaxation", "relax", "strenuous activity", "acupuncture", "allergy", "water", "diet", "heat", "fasting", "pain medication"
 }
 vectorizer = TfidfVectorizer(vocabulary=vocab, ngram_range=(1, 2))
 tfidfMatrix = vectorizer.fit_transform(cleanedCorpus)
