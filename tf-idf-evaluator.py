@@ -7,7 +7,7 @@ from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pandas as pd
 
-jsonFilePaths = {
+jsonFilePaths = [
     # autogen backup1
     "Existing-Solution/Responses/autogen-GPT-4o-backup1/autogen-auto-agent-selection-responses.json",
     "Existing-Solution/Responses/autogen-GPT-4o-backup1/autogen-random-agent-selection-responses.json",
@@ -41,7 +41,7 @@ jsonFilePaths = {
     "Novel-Approach/Responses/GPT-4o-backup3/messages-initial-auto-creation-agent-llm-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup3/messages-initial-auto-creation-random-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup3/messages-initial-auto-creation-round-robin-selection.json",
-}
+]
 
 corpus = []
 
@@ -65,7 +65,7 @@ lemmatizer = WordNetLemmatizer()
 
 def clean_text(text):
     text = text.lower()
-    text = re.sub(r'[^\w\s]', '', text) # remove punctuation
+    text = re.sub(r'[^\w\s]', ' ', text) # remove punctuation
     text = re.sub(r'\d+', '', text) # remove numbers
     text = ' '.join([word for word in text.split() if word not in stopwords])
     text = ' '.join([lemmatizer.lemmatize(word) for word in nltk.word_tokenize(text)])
