@@ -110,11 +110,23 @@ print("TF-IDF table is created and saved as tfidf-table.csv.")
 sums = tfidfTable.iloc[:, 1:].sum(axis=0)
 
 plt.figure(figsize=(15, 10))
-plt.bar(tfidfTable.columns[1:], sums)
+plt.rcParams.update({'font.size': 15})
+# convert '/' in column  in tfidfTable to '\n' for better readability
+tfidfTable.columns = [col.replace('/', '\n') for col in tfidfTable.columns]
+barColors = []
+for label in tfidfTable.columns:
+    if label.split("\n")[1].startswith("autogen"):
+        barColors.append('red')
+    elif label.split("\n")[1].startswith("DRTAG"):
+        barColors.append('green')
+    else:
+        barColors.append('blue')
+
+plt.bar(tfidfTable.columns[1:], sums, color=barColors)
 plt.xticks(rotation=90)
 plt.ylabel("TF-IDF Sum")
 plt.title("TF-IDF Sum for each conversation")
 plt.tight_layout()
-plt.savefig("tf-idf-sums.png")
+plt.savefig("tfidfSums.png")
 
 print("TF-IDF sums are saved as tf-idf-sums.png.")

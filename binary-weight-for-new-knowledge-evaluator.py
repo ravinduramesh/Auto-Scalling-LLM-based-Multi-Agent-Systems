@@ -91,14 +91,25 @@ for jsonFilePath in jsonFilePaths:
     filename = jsonFilePath.split("/")[-2] + '\n' + jsonFilePath.split("/")[-1]
     conversationScores[filename] = len(termsToScoreConversation)
 
+
 # Plot a graph of conversation scores calculated using binary weighting for new knowledge
 import matplotlib.pyplot as plt
 
-plt.figure(figsize=(10, 10))
-plt.bar(conversationScores.keys(), conversationScores.values())
+plt.figure(figsize=(15, 10))
+plt.rcParams.update({'font.size': 15})
+barColors = []
+for label in conversationScores.keys():
+    if label.split("\n")[1].startswith("autogen"):
+        barColors.append('red')
+    elif label.split("\n")[1].startswith("DRTAG"):
+        barColors.append('green')
+    else:
+        barColors.append('blue')
+
+plt.bar(conversationScores.keys(), conversationScores.values(), color=barColors)
 plt.xticks(rotation=90)
 plt.ylabel("Conversation Score")
 plt.title("Conversation score calculated using binary weighting for new knowledge")
 plt.tight_layout()
-plt.savefig("conversation-scores-binary-weighting2.png")
+plt.savefig("conversationScoresBinaryWeighting2.png")
 print("Graph is plotted successfully.")

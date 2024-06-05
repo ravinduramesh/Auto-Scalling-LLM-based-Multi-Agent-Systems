@@ -59,7 +59,16 @@ import matplotlib.pyplot as plt
 
 plt.figure(figsize=(15, 10))
 plt.rcParams.update({'font.size': 15})
-plt.bar(agentCounts.keys(), agentCounts.values())
+barColors = []
+for label in agentCounts.keys():
+    if label.split("\n")[1].startswith("autogen"):
+        barColors.append('red')
+    elif label.split("\n")[1].startswith("DRTAG"):
+        barColors.append('green')
+    else:
+        barColors.append('blue')
+
+plt.bar(agentCounts.keys(), agentCounts.values(), color=barColors)
 plt.xticks(rotation=90)
 plt.ylabel("Number of agents")
 plt.title("Number of agents in each conversation")
