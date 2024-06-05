@@ -2,38 +2,38 @@ import json
 
 jsonFilePaths = [
     # autogen backup1
-    "Existing-Solution/Responses/GPT-4o-backup1/autogen-auto-agent-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup1/autogen-random-agent-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup1/autogen-round-robin-agent-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup1/autogen-auto-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup1/autogen-random-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup1/autogen-round-robin-selection.json",
     # autogen backup2
-    "Existing-Solution/Responses/GPT-4o-backup2/autogen-auto-agent-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup2/autogen-random-agent-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup2/autogen-round-robin-agent-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup2/autogen-auto-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup2/autogen-random-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup2/autogen-round-robin-selection.json",
     # autogen backup3
-    "Existing-Solution/Responses/GPT-4o-backup3/autogen-auto-agent-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup3/autogen-random-agent-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup3/autogen-round-robin-agent-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup3/autogen-auto-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup3/autogen-random-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup3/autogen-round-robin-selection.json",
     # IAAG and DRTAG backup1
-    "Novel-Approach/Responses/GPT-4o-backup1/dynamic-agent-creation-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/dynamic-agent-creation-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/dynamic-agent-creation-round-robin-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/initial-auto-creation-agent-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/initial-auto-creation-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/initial-auto-creation-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-round-robin-selection.json",
     # IAAG and DRTAG backup2
-    "Novel-Approach/Responses/GPT-4o-backup2/dynamic-agent-creation-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/dynamic-agent-creation-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/dynamic-agent-creation-round-robin-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/initial-auto-creation-agent-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/initial-auto-creation-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/initial-auto-creation-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-round-robin-selection.json",
     # IAAG and DRTAG backup3
-    "Novel-Approach/Responses/GPT-4o-backup3/dynamic-agent-creation-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup3/dynamic-agent-creation-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup3/dynamic-agent-creation-round-robin-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup3/initial-auto-creation-agent-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup3/initial-auto-creation-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup3/initial-auto-creation-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup3/IAAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup3/IAAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup3/IAAG-round-robin-selection.json",
 ]
 
 agentCounts = dict()
@@ -57,11 +57,12 @@ print("Number of agents are counted for each JSON file.")
 # Plot a graph of agent counts
 import matplotlib.pyplot as plt
 
-plt.figure(figsize=(10, 10))
+plt.figure(figsize=(15, 10))
+plt.rcParams.update({'font.size': 15})
 plt.bar(agentCounts.keys(), agentCounts.values())
 plt.xticks(rotation=90)
 plt.ylabel("Number of agents")
 plt.title("Number of agents in each conversation")
 plt.tight_layout()
-plt.savefig("agent-counts.png")
+plt.savefig("agentCounts.png")
 print("Graph is plotted successfully.")

@@ -6,41 +6,42 @@ from nltk.stem import WordNetLemmatizer
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pandas as pd
+import matplotlib.pyplot as plt
 
 jsonFilePaths = [
     # autogen backup1
-    "Existing-Solution/Responses/GPT-4o-backup1/autogen-auto-agent-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup1/autogen-random-agent-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup1/autogen-round-robin-agent-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup1/autogen-auto-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup1/autogen-random-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup1/autogen-round-robin-selection.json",
     # autogen backup2
-    "Existing-Solution/Responses/GPT-4o-backup2/autogen-auto-agent-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup2/autogen-random-agent-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup2/autogen-round-robin-agent-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup2/autogen-auto-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup2/autogen-random-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup2/autogen-round-robin-selection.json",
     # autogen backup3
-    "Existing-Solution/Responses/GPT-4o-backup3/autogen-auto-agent-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup3/autogen-random-agent-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup3/autogen-round-robin-agent-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup3/autogen-auto-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup3/autogen-random-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup3/autogen-round-robin-selection.json",
     # IAAG and DRTAG backup1
-    "Novel-Approach/Responses/GPT-4o-backup1/dynamic-agent-creation-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/dynamic-agent-creation-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/dynamic-agent-creation-round-robin-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/initial-auto-creation-agent-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/initial-auto-creation-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/initial-auto-creation-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-round-robin-selection.json",
     # IAAG and DRTAG backup2
-    "Novel-Approach/Responses/GPT-4o-backup2/dynamic-agent-creation-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/dynamic-agent-creation-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/dynamic-agent-creation-round-robin-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/initial-auto-creation-agent-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/initial-auto-creation-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/initial-auto-creation-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-round-robin-selection.json",
     # IAAG and DRTAG backup3
-    "Novel-Approach/Responses/GPT-4o-backup3/dynamic-agent-creation-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup3/dynamic-agent-creation-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup3/dynamic-agent-creation-round-robin-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup3/initial-auto-creation-agent-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup3/initial-auto-creation-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup3/initial-auto-creation-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup3/IAAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup3/IAAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup3/IAAG-round-robin-selection.json",
 ]
 
 corpus = []
@@ -105,3 +106,15 @@ tfidfTable = pd.DataFrame(transposedTfidfArray, columns=documentNames, index=out
 
 tfidfTable.to_csv("tfidf-table.csv")
 print("TF-IDF table is created and saved as tfidf-table.csv.")
+
+sums = tfidfTable.iloc[:, 1:].sum(axis=0)
+
+plt.figure(figsize=(15, 10))
+plt.bar(tfidfTable.columns[1:], sums)
+plt.xticks(rotation=90)
+plt.ylabel("TF-IDF Sum")
+plt.title("TF-IDF Sum for each conversation")
+plt.tight_layout()
+plt.savefig("tf-idf-sums.png")
+
+print("TF-IDF sums are saved as tf-idf-sums.png.")
