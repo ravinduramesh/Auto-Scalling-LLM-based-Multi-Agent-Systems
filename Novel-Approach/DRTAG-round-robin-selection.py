@@ -26,6 +26,7 @@ conversationMgtAgentPromptToGenerateSysPromptForNewAgent = "Generate a system me
 
 globalAgentConversation = []
 
+
 def getUserMsg():
     user_message = input("GPT: What do you want to do?\nYou: ")
     globalAgentConversation.append({"role": userRole, "content": user_message})
@@ -99,20 +100,17 @@ def sendMsgForAgent(agentName):
 
 try:
     userMsg = getUserMsg()
-    newAgent = askConversationMgtAgentToAddNewAgent()
-    while newAgent != "No":
-        if newAgent not in agentsList:
+    nextAgentName = ""
+    while askConversationMgtAgentToConcludeConversation() == "No":
+        newAgent = askConversationMgtAgentToAddNewAgent()
+        if newAgent != "No" and (newAgent not in agentsList):
             agentsList.append(newAgent)
             newAgentSysPrompt = askConversationMgtAgentToGenerateSysPromptForNewAgent(newAgent)
             systemPromptDict[newAgent] = newAgentSysPrompt
-        newAgent = askConversationMgtAgentToAddNewAgent()
-    
-    nextAgentName = ""
-    while askConversationMgtAgentToConcludeConversation() == "No":
         nextAgentName = askConversationMgtAgentToFindNextAgent(nextAgentName)
         sendMsgForAgent(nextAgentName)
 except Exception as e:
     print(e)
 finally:
-    with open("messages-initial-auto-creation-round-robin-selection.json", "w") as f:
+    with open("DRTAG-round-robin-selection.json", "w") as f:
         f.write(json.dumps(globalAgentConversation))

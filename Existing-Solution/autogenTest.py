@@ -71,5 +71,5 @@ for message in chat_result.chat_history:
                 "content": message['content'],
             }
         )
-with open("autogen-round-robin-agent-selection-responses.json", "w") as f:
+with open("autogen-round-robin-selection.json", "w") as f:
     f.write(json.dumps(finalChat))

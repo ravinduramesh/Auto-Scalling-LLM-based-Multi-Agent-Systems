@@ -50,7 +50,7 @@ for jsonFilePath in jsonFilePaths:
 
     print(agents)
     filename = jsonFilePath.split("/")[-2] + '\n' + jsonFilePath.split("/")[-1]
-    agentCounts[filename] = len(agents)
+    agentCounts[filename] = len(agents) - 1 # Exclude the patient
 
 print("Number of agents are counted for each JSON file.")
 

@@ -57,18 +57,12 @@ def localizeMsgForAgent(agentName):
 
     return localizedMsg
 
-# round-robin selection
-def askConversationMgtAgentToFindNextAgent(currentAgent):
-    if currentAgent == "":
-        currentAgent = agentsList[0]
-    else:
-        currentAgentIndex = agentsList.index(currentAgent)
-        if currentAgentIndex == len(agentsList) - 1:
-            currentAgent = agentsList[0]
-        else:
-            currentAgent = agentsList[currentAgentIndex + 1]
-    print("manager-next-agent: " + currentAgent)
-    return currentAgent
+def askConversationMgtAgentToFindNextAgent():
+    formattedConversationMgtAgentPromptToFindNextAgent = conversationMgtAgentPromptToFindNextAgent.format(agentsList, globalAgentConversation)
+    messages = [{"role": "system", "content": conversationMgtAgentSystemPrompt}, {"role": "user", "content": formattedConversationMgtAgentPromptToFindNextAgent}]
+    content = callOpenAI(messages)
+    print("manager-next-agent: " + content)
+    return content
 
 def askConversationMgtAgentToConcludeConversation():
     formattedConversationMgtAgentPromptToAskForConclusion = conversationMgtAgentPromptToAskForConclusion.format(agentsList, globalAgentConversation)
@@ -100,17 +94,19 @@ def sendMsgForAgent(agentName):
 
 try:
     userMsg = getUserMsg()
-    nextAgentName = ""
-    while askConversationMgtAgentToConcludeConversation() == "No":
-        newAgent = askConversationMgtAgentToAddNewAgent()
-        if newAgent != "No" and (newAgent not in agentsList):
+    newAgent = askConversationMgtAgentToAddNewAgent()
+    while newAgent != "No":
+        if newAgent not in agentsList:
             agentsList.append(newAgent)
             newAgentSysPrompt = askConversationMgtAgentToGenerateSysPromptForNewAgent(newAgent)
             systemPromptDict[newAgent] = newAgentSysPrompt
-        nextAgentName = askConversationMgtAgentToFindNextAgent(nextAgentName)
+        newAgent = askConversationMgtAgentToAddNewAgent()
+    
+    while askConversationMgtAgentToConcludeConversation() == "No":
+        nextAgentName = askConversationMgtAgentToFindNextAgent()
         sendMsgForAgent(nextAgentName)
 except Exception as e:
     print(e)
 finally:
-    with open("messages-dynamic-agent-creation-round-robin-selection.json", "w") as f:
+    with open("IAAG-llm-selection.json", "w") as f:
         f.write(json.dumps(globalAgentConversation))
