@@ -45,6 +45,15 @@ jsonFilePaths = [
 ]
 
 corpus = []
+autogenAutoCorpus = []
+autogenRandomCorpus = []
+autogenRoundRobinCorpus = []
+drtagLlmCorpus = []
+drtagRandomCorpus = []
+drtagRoundRobinCorpus = []
+iaagLlmCorpus = []
+iaagRandomCorpus = []
+iaagRoundRobinCorpus = []
 
 # Read data from the JSON file
 for jsonFilePath in jsonFilePaths:
@@ -56,7 +65,34 @@ for jsonFilePath in jsonFilePaths:
     for entry in jsonData:
         plainTextData += f"{entry['role']} - {entry['content']}\n"
 
-    corpus.append(plainTextData)
+    if "autogen-auto-selection" in jsonFilePath:
+        autogenAutoCorpus.append(plainTextData)
+    elif "autogen-random-selection" in jsonFilePath:
+        autogenRandomCorpus.append(plainTextData)
+    elif "autogen-round-robin-selection" in jsonFilePath:
+        autogenRoundRobinCorpus.append(plainTextData)
+    elif "DRTAG-llm-selection" in jsonFilePath:
+        drtagLlmCorpus.append(plainTextData)
+    elif "DRTAG-random-selection" in jsonFilePath:
+        drtagRandomCorpus.append(plainTextData)
+    elif "DRTAG-round-robin-selection" in jsonFilePath:
+        drtagRoundRobinCorpus.append(plainTextData)
+    elif "IAAG-llm-selection" in jsonFilePath:
+        iaagLlmCorpus.append(plainTextData)
+    elif "IAAG-random-selection" in jsonFilePath:
+        iaagRandomCorpus.append(plainTextData)
+    elif "IAAG-round-robin-selection" in jsonFilePath:
+        iaagRoundRobinCorpus.append(plainTextData)
+
+corpus.append('\n '.join(autogenAutoCorpus))
+corpus.append('\n '.join(autogenRandomCorpus))
+corpus.append('\n '.join(autogenRoundRobinCorpus))
+corpus.append('\n '.join(drtagLlmCorpus))
+corpus.append('\n '.join(drtagRandomCorpus))
+corpus.append('\n '.join(drtagRoundRobinCorpus))
+corpus.append('\n '.join(iaagLlmCorpus))
+corpus.append('\n '.join(iaagRandomCorpus))
+corpus.append('\n '.join(iaagRoundRobinCorpus))
 
 print("Corpus with plain text documents is created.")
 
@@ -74,7 +110,7 @@ def clean_text(text):
 
 cleanedCorpus = [clean_text(doc) for doc in corpus]
 # save cleaned corpus to a txt file
-with open("cleaned-corpus.txt", "w") as file:
+with open("cleaned-corpus-copy.txt", "w") as file:
     for doc in cleanedCorpus:
         file.write(doc + "\n")
 print("Text data is cleaned and stopwords are removed.")
@@ -95,29 +131,24 @@ tfidfMatrix = vectorizer.fit_transform(cleanedCorpus)
 
 # Create tfidf table to output
 outputVocabulary = vectorizer.get_feature_names_out()
-documentNames = []
-for path in jsonFilePaths:
-    splitPath = path.split('/')
-    documentNames.append(splitPath[-2]+'/'+splitPath[-1])
+documentNames = ["autogen-auto-selection", "autogen-random-selection", "autogen-round-robin-selection", "DRTAG-llm-selection", "DRTAG-random-selection", "DRTAG-round-robin-selection", "IAAG-llm-selection", "IAAG-random-selection", "IAAG-round-robin-selection"]
 
 tfidfArray = tfidfMatrix.toarray()
 transposedTfidfArray = tfidfArray.T
 tfidfTable = pd.DataFrame(transposedTfidfArray, columns=documentNames, index=outputVocabulary)
 
-tfidfTable.to_csv("tfidf-table.csv")
+tfidfTable.to_csv("tfidf-table-copy.csv")
 print("TF-IDF table is created and saved as tfidf-table.csv.")
 
 sums = tfidfTable.iloc[:, 0:].sum(axis=0)
 
 plt.figure(figsize=(15, 10))
 plt.rcParams.update({'font.size': 15})
-# convert '/' in column  in tfidfTable to '\n' for better readability
-tfidfTable.columns = [col.replace('/', '\n') for col in tfidfTable.columns]
 barColors = []
 for label in tfidfTable.columns[0:]:
-    if label.split("\n")[1].startswith("autogen"):
+    if label.startswith("autogen"):
         barColors.append('red')
-    elif label.split("\n")[1].startswith("DRTAG"):
+    elif label.startswith("DRTAG"):
         barColors.append('green')
     else:
         barColors.append('blue')
@@ -127,6 +158,6 @@ plt.xticks(rotation=90)
 plt.ylabel("TF-IDF Sum")
 plt.title("TF-IDF Sum for each conversation")
 plt.tight_layout()
-plt.savefig("tfidfSums.png")
+plt.savefig("tfidfSumsCopy.png")
 
-print("TF-IDF sums are saved as tf-idf-sums.png.")
+print("TF-IDF sums are saved as tf-idf-sums-copy.png")
