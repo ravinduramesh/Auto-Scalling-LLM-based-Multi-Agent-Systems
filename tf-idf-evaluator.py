@@ -9,38 +9,41 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 jsonFilePaths = [
-    # autogen backup1
+    # autogen llm selection
     "Existing-Solution/Responses/GPT-4o-backup1/autogen-auto-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup1/autogen-random-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup1/autogen-round-robin-selection.json",
-    # autogen backup2
     "Existing-Solution/Responses/GPT-4o-backup2/autogen-auto-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup2/autogen-random-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup2/autogen-round-robin-selection.json",
-    # autogen backup3
     "Existing-Solution/Responses/GPT-4o-backup3/autogen-auto-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup3/autogen-random-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup3/autogen-round-robin-selection.json",
-    # IAAG and DRTAG backup1
+    # DRTAG llm selection
     "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-round-robin-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-round-robin-selection.json",
-    # IAAG and DRTAG backup2
     "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-round-robin-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-round-robin-selection.json",
-    # IAAG and DRTAG backup3
     "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-round-robin-selection.json",
+    # IAAG llm selection
+    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-llm-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup3/IAAG-llm-selection.json",
+    # autogen random selection
+    "Existing-Solution/Responses/GPT-4o-backup1/autogen-random-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup2/autogen-random-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup3/autogen-random-selection.json",
+    # DRTAG random selection
+    "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-random-selection.json",
+    # IAAG random selection
+    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-random-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup3/IAAG-random-selection.json",
+    # autogen round robin selection
+    "Existing-Solution/Responses/GPT-4o-backup1/autogen-round-robin-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup2/autogen-round-robin-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup3/autogen-round-robin-selection.json",
+    # DRTAG round robin selection
+    "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-round-robin-selection.json",
+    # IAAG round robin selection
+    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-round-robin-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup3/IAAG-round-robin-selection.json",
 ]
 
@@ -88,7 +91,7 @@ vocab = {
     "clinical examination", "blood test", "stool test", "ct", "urinalysis", "ultrasound", "surgery", "antibiotic", "pain management", "manage pain", "pain relief", "physical examination", "pysical exam", "medical history", "nephrology",
     "endoscopic evaluation", "laparoscopy", "laparoscopic", "allergies", "anesthetic", "anesthesia", "pelvic exam", "neurological examination", "hormone level", "mri", "endoscopic evaluation", "probiotics", "urine",
     # Preventive Actions, Prior and Post Treatment Advice  
-    "diet", "dietary", "hydrated", "hydration", "rest", "symptom diary", "stress", "breathing", "deepbreathing", "relaxation", "relax", "strenuous activity", "acupuncture", "allergy", "water", "diet", "heat", "fasting", "pain medication"
+    "diet", "dietary", "hydrated", "hydration", "rest", "symptom diary", "fever", "nausea", "vomiting", "bowel", "dizziness", "abdominal rigidity", "stress", "breathing", "deepbreathing", "relaxation", "relax", "strenuous activity", "acupuncture", "allergy", "water", "diet", "heat", "fasting", "pain medication"
 }
 vectorizer = TfidfVectorizer(vocabulary=vocab, ngram_range=(1, 2))
 tfidfMatrix = vectorizer.fit_transform(cleanedCorpus)

@@ -1,38 +1,41 @@
 import json
 
 jsonFilePaths = [
-    # autogen backup1
+    # autogen llm selection
     "Existing-Solution/Responses/GPT-4o-backup1/autogen-auto-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup1/autogen-random-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup1/autogen-round-robin-selection.json",
-    # autogen backup2
     "Existing-Solution/Responses/GPT-4o-backup2/autogen-auto-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup2/autogen-random-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup2/autogen-round-robin-selection.json",
-    # autogen backup3
     "Existing-Solution/Responses/GPT-4o-backup3/autogen-auto-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup3/autogen-random-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup3/autogen-round-robin-selection.json",
-    # IAAG and DRTAG backup1
+    # DRTAG llm selection
     "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-round-robin-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-round-robin-selection.json",
-    # IAAG and DRTAG backup2
     "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-round-robin-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-round-robin-selection.json",
-    # IAAG and DRTAG backup3
     "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-llm-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-random-selection.json",
-    "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-round-robin-selection.json",
+    # IAAG llm selection
+    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-llm-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup3/IAAG-llm-selection.json",
+    # autogen random selection
+    "Existing-Solution/Responses/GPT-4o-backup1/autogen-random-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup2/autogen-random-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup3/autogen-random-selection.json",
+    # DRTAG random selection
+    "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-random-selection.json",
+    # IAAG random selection
+    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-random-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup3/IAAG-random-selection.json",
+    # autogen round robin selection
+    "Existing-Solution/Responses/GPT-4o-backup1/autogen-round-robin-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup2/autogen-round-robin-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup3/autogen-round-robin-selection.json",
+    # DRTAG round robin selection
+    "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-round-robin-selection.json",
+    # IAAG round robin selection
+    "Novel-Approach/Responses/GPT-4o-backup1/IAAG-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup2/IAAG-round-robin-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup3/IAAG-round-robin-selection.json",
 ]
 
@@ -48,7 +51,6 @@ for jsonFilePath in jsonFilePaths:
     for entry in jsonData:
         agents.add(entry["role"])
 
-    print(agents)
     filename = jsonFilePath.split("/")[-2] + '\n' + jsonFilePath.split("/")[-1]
     agentCounts[filename] = len(agents) - 1 # Exclude the patient
 
@@ -71,7 +73,7 @@ for label in agentCounts.keys():
 plt.bar(agentCounts.keys(), agentCounts.values(), color=barColors)
 plt.xticks(rotation=90)
 plt.ylabel("Number of agents")
-plt.title("Number of agents in each conversation")
+plt.title("Number of agents participated to each conversation")
 plt.tight_layout()
 plt.savefig("agentCounts.png")
 print("Graph is plotted successfully.")
