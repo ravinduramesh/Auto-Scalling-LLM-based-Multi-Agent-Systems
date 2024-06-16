@@ -10,9 +10,9 @@ import matplotlib.pyplot as plt
 
 jsonFilePaths = [
     # autogen llm selection
-    "Existing-Solution/Responses/GPT-4o-backup1/autogen-auto-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup2/autogen-auto-selection.json",
-    "Existing-Solution/Responses/GPT-4o-backup3/autogen-auto-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup1/autogen-llm-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup2/autogen-llm-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup3/autogen-llm-selection.json",
     # DRTAG llm selection
     "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-llm-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-llm-selection.json",
@@ -150,11 +150,11 @@ plt.rcParams.update({'font.size': 15})
 barColors = []
 for label in tfidfTable.columns[0:]:
     if label.startswith("autogen"):
-        barColors.append('red')
+        barColors.append('orangered')
     elif label.startswith("DRTAG"):
-        barColors.append('green')
+        barColors.append('lawngreen')
     else:
-        barColors.append('blue')
+        barColors.append('dodgerblue')
 
 plt.bar(tfidfTable.columns[0:], sums, color=barColors)
 plt.xticks(rotation=90)
