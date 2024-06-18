@@ -68,7 +68,7 @@ for jsonFilePath in jsonFilePaths:
     for entry in jsonData:
         plainTextData += f"{entry['role']} - {entry['content']}\n"
 
-    if "autogen-auto-selection" in jsonFilePath:
+    if "autogen-llm-selection" in jsonFilePath:
         autogenAutoCorpus.append(plainTextData)
     elif "autogen-random-selection" in jsonFilePath:
         autogenRandomCorpus.append(plainTextData)
@@ -113,7 +113,7 @@ def clean_text(text):
 
 cleanedCorpus = [clean_text(doc) for doc in corpus]
 # save cleaned corpus to a txt file
-with open("cleaned-corpus-copy.txt", "w") as file:
+with open("cleaned-corpus-group-wise.txt", "w") as file:
     for doc in cleanedCorpus:
         file.write(doc + "\n")
 print("Text data is cleaned and stopwords are removed.")
@@ -134,13 +134,13 @@ tfidfMatrix = vectorizer.fit_transform(cleanedCorpus)
 
 # Create tfidf table to output
 outputVocabulary = vectorizer.get_feature_names_out()
-documentNames = ["autogen-auto-selection", "autogen-random-selection", "autogen-round-robin-selection", "DRTAG-llm-selection", "DRTAG-random-selection", "DRTAG-round-robin-selection", "IAAG-llm-selection", "IAAG-random-selection", "IAAG-round-robin-selection"]
+documentNames = ["autogen-llm-selection", "autogen-random-selection", "autogen-round-robin-selection", "DRTAG-llm-selection", "DRTAG-random-selection", "DRTAG-round-robin-selection", "IAAG-llm-selection", "IAAG-random-selection", "IAAG-round-robin-selection"]
 
 tfidfArray = tfidfMatrix.toarray()
 transposedTfidfArray = tfidfArray.T
 tfidfTable = pd.DataFrame(transposedTfidfArray, columns=documentNames, index=outputVocabulary)
 
-tfidfTable.to_csv("tfidf-table-copy.csv")
+tfidfTable.to_csv("tfidf-table-group-wise.csv")
 print("TF-IDF table is created and saved as tfidf-table.csv.")
 
 sums = tfidfTable.iloc[:, 0:].sum(axis=0)
@@ -161,6 +161,6 @@ plt.xticks(rotation=90)
 plt.ylabel("TF-IDF Sum")
 plt.title("TF-IDF Sum for each conversation")
 plt.tight_layout()
-plt.savefig("tfidfSumsCopy.png")
+plt.savefig("tfidfGroupWise.png")
 
-print("TF-IDF sums are saved as tf-idf-sums-copy.png")
+print("TF-IDF sums are saved as tf-idf-group-wise.png")
