@@ -49,8 +49,6 @@ tfidfSums = dict()
 for column in tfidfTable.columns[1:]:
     tfidfSums[column] = tfidfTable[column].sum()
 
-print(tfidfSums)
-
 for jsonFilePath in jsonFilePaths:
     with open(jsonFilePath) as jsonFile:
         jsonData = json.load(jsonFile)
@@ -66,7 +64,6 @@ for jsonFilePath in jsonFilePaths:
     agentCountsAndTfIdf[jsonFilePath.split("/")[-2] + '\n' + jsonFilePath.split("/")[-1]] = [(len(agents) - 1), tfidfSumValue]
 
 print("Number of agents are counted for each JSON file.")
-print(agentCountsAndTfIdf)
 
 # Plot a scatter plot of agent count vs binary weight
 fig, axes = plt.subplots(1, 3, figsize=(20, 8))
