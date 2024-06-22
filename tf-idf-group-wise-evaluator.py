@@ -145,7 +145,7 @@ print("TF-IDF table is created and saved as tfidf-table.csv.")
 
 sums = tfidfTable.iloc[:, 0:].sum(axis=0)
 
-plt.figure(figsize=(15, 10))
+plt.figure(figsize=(20, 10))
 plt.rcParams.update({'font.size': 15})
 barColors = []
 for label in tfidfTable.columns[0:]:
