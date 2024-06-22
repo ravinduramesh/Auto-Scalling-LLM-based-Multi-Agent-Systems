@@ -127,8 +127,8 @@ for label in tfidfTable.columns[0:]:
 
 plt.bar(tfidfTable.columns[0:], sums, color=barColors)
 plt.xticks(rotation=90)
-plt.ylabel("TF-IDF Sum")
-plt.title("TF-IDF Sum for each conversation")
+plt.ylabel("TF-IDF Sums")
+plt.title("Summations of all keywords' TF-IDF values within each conversation")
 plt.tight_layout()
 plt.savefig("tfidfSums.png")
 
