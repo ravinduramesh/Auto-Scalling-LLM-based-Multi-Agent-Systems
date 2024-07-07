@@ -1,9 +1,12 @@
 import json
 import random
+import os
 
 from openai import OpenAI
+from dotenv import load_dotenv
+load_dotenv()
 
-client = OpenAI(api_key='api-key')
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 agentSystemPromptPrefix = "Based on the given conversations, give your ideas to add new information and insight as a single dialog without mentioning your role. Make your dialog shorter and effective without repeating the information that already given in the converstaion."
 

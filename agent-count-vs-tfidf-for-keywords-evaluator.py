@@ -96,4 +96,4 @@ fig.legend(loc="upper right", title="LLM-based MAS approach", labels=["Autogen",
 fig.suptitle("Agent Count vs TF-IDF Sum for Keywords in Conversations")
 plt.tight_layout(rect=[0, 0.03, 1, 0.95])
 plt.savefig("agentCountVsTfIdfSums.png")
-print("Scatter plot of agent count vs binary weight is saved as agentCountVsNewKnowledgeBinaryWeight3.png.")
+print("Scatter plot of agent count vs binary weight is saved as agentCountVsTfIdfSums.png.")
