@@ -1,1 +1,1 @@
-# Dynamic Agent Introduction for Multi-Agent LLM Systems
+# Auto-Scalling LLM-based Multi-Agent Systems
