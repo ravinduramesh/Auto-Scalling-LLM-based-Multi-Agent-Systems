@@ -7,14 +7,14 @@ load_dotenv()
 
 if os.getenv("LLM_SELECTION") == "openai":
     llm_config = {
-        "config_list": [{"model": "gpt-4o", "api_key": "api-key"}],
+        "config_list": [{"model": "gpt-4o", "api_key": os.getenv("OPENAI_API_KEY")}],
     }
 elif os.getenv("LLM_SELECTION") == "gemini":
     llm_config = {
-        "config_list": [{"model": "gemini-2.5-flash", "api_key": "api-key"}],
+        "config_list": [{"model": "gemini-2.5-flash", "api_key": os.getenv("GEMINI_API_KEY"), "api_type": "google"}],
     }
 
-speakerSelectionMethod = "round_robin"  # "round_robin" OR "random" OR "auto"
+speakerSelectionMethod = "auto"  # "round_robin" OR "random" OR "auto"
 
 patient = autogen.UserProxyAgent(
     name="Patient",
@@ -70,7 +70,7 @@ for message in chat_result.chat_history:
             finalChat.append(
                 {
                     "role": "Patient",
-                    "content": message['content'],
+                    "content": message['content'].strip("'").strip('"'),
                 }
             )
     else:
@@ -78,8 +78,8 @@ for message in chat_result.chat_history:
         finalChat.append(
             {
                 "role": message['name'],
-                "content": message['content'],
+                "content": message['content'].strip("'").strip('"'),
             }
         )
-with open("autogen-round-robin-selection.json", "w") as f:
+with open("autogen-"+speakerSelectionMethod+"-selection.json", "w") as f:
     f.write(json.dumps(finalChat))

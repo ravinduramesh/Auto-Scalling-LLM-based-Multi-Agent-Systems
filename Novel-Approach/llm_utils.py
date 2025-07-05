@@ -26,5 +26,5 @@ def callLLM(messages):
             response_format={ "type": "text"}
         )
 
-    content = response.choices[0].message.content.strip("'")
+    content = response.choices[0].message.content.strip("'").strip('"')
     return content
