@@ -5,7 +5,13 @@ from openai import OpenAI
 from dotenv import load_dotenv
 load_dotenv()
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+if os.getenv("LLM_SELECTION") == "openai":
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+elif os.getenv("LLM_SELECTION") == "gemini":
+    client = OpenAI(
+        api_key=os.getenv("GEMINI_API_KEY"),
+        base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
+    )
 
 agentSystemPromptPrefix = "Based on the given conversations, give your ideas to add new information and insight as a single dialog without mentioning your role. Make your dialog shorter and effective without repeating the information that already given in the converstaion."
 
@@ -34,12 +40,19 @@ def getUserMsg():
     user_message = input("GPT: What do you want to do?\nYou: ")
     globalAgentConversation.append({"role": userRole, "content": user_message})
 
-def callOpenAI(messages):
-    response = client.chat.completions.create(
-        messages=messages,
-        model="gpt-4o",
-        response_format={ "type": "text"}
-    )
+def callLLM(messages):
+    if os.getenv("LLM_SELECTION") == "openai":
+        response = client.chat.completions.create(
+            messages=messages,
+            model="gpt-4o",
+            response_format={ "type": "text"}
+        )
+    if os.getenv("LLM_SELECTION") == "gemini":
+        response = client.chat.completions.create(
+            messages=messages,
+            model="gemini-2.5-flash",
+            response_format={ "type": "text"}
+        )
 
     content = response.choices[0].message.content.strip("'")
     return content
@@ -63,34 +76,34 @@ def localizeMsgForAgent(agentName):
 def askConversationMgtAgentToFindNextAgent():
     formattedConversationMgtAgentPromptToFindNextAgent = conversationMgtAgentPromptToFindNextAgent.format(agentsList, globalAgentConversation)
     messages = [{"role": "system", "content": conversationMgtAgentSystemPrompt}, {"role": "user", "content": formattedConversationMgtAgentPromptToFindNextAgent}]
-    content = callOpenAI(messages)
+    content = callLLM(messages)
     print("manager-next-agent: " + content)
     return content
 
 def askConversationMgtAgentToConcludeConversation():
     formattedConversationMgtAgentPromptToAskForConclusion = conversationMgtAgentPromptToAskForConclusion.format(agentsList, globalAgentConversation)
     messages = [{"role": "system", "content": conversationMgtAgentSystemPrompt}, {"role": "user", "content": formattedConversationMgtAgentPromptToAskForConclusion}]
-    content = callOpenAI(messages)
+    content = callLLM(messages)
     print("manager-conclusion: " + content)
     return content
 
 def askConversationMgtAgentToAddNewAgent():
     formattedConversationMgtAgentPromptToAddNewAgent = conversationMgtAgentPromptToAddNewAgent.format(agentsList, location, globalAgentConversation)
     messages = [{"role": "system", "content": conversationMgtAgentSystemPrompt}, {"role": "user", "content": formattedConversationMgtAgentPromptToAddNewAgent}]
-    content = callOpenAI(messages)
+    content = callLLM(messages)
     print("manager-add-agent: " + content)
     return content
 
 def askConversationMgtAgentToGenerateSysPromptForNewAgent(newAgentName):
     formattedConversationMgtAgentPromptToGenerateSysPromptForNewAgent = conversationMgtAgentPromptToGenerateSysPromptForNewAgent.format(newAgentName, location, systemPromptDict)
     messages = [{"role": "system", "content": conversationMgtAgentSystemPrompt}, {"role": "user", "content": formattedConversationMgtAgentPromptToGenerateSysPromptForNewAgent}]
-    content = callOpenAI(messages)
+    content = callLLM(messages)
     print("manager-add-agent-prompt: " + content)
     return content
 
 def sendMsgForAgent(agentName):
     messages = localizeMsgForAgent(agentName)
-    agentResponse = callOpenAI(messages)
+    agentResponse = callLLM(messages)
     globalAgentConversation.append({"role": agentName, "content": agentResponse})
     print(agentName + ": " + agentResponse)
     return
