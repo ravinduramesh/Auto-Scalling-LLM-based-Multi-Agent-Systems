@@ -1,10 +1,20 @@
 import autogen
 import json
+import os
 
+from dotenv import load_dotenv
+load_dotenv()
 
-llm_config = {
-    "config_list": [{"model": "gpt-4o", "api_key": "api-key"}],
-}
+if os.getenv("LLM_SELECTION") == "openai":
+    llm_config = {
+        "config_list": [{"model": "gpt-4o", "api_key": "api-key"}],
+    }
+elif os.getenv("LLM_SELECTION") == "gemini":
+    llm_config = {
+        "config_list": [{"model": "gemini-2.5-flash", "api_key": "api-key"}],
+    }
+
+speakerSelectionMethod = "round_robin"  # "round_robin" OR "random" OR "auto"
 
 patient = autogen.UserProxyAgent(
     name="Patient",
@@ -44,7 +54,7 @@ gastroenterologist = autogen.AssistantAgent(
     llm_config=llm_config,
 )
 
-groupchat = autogen.GroupChat(agents=[patient, generalDoctor, nurse, radiologist, surgeon, gastroenterologist], messages=[], max_round=20, speaker_selection_method="round_robin")
+groupchat = autogen.GroupChat(agents=[patient, generalDoctor, nurse, radiologist, surgeon, gastroenterologist], messages=[], max_round=20, speaker_selection_method=speakerSelectionMethod)
 
 manager = autogen.GroupChatManager(groupchat=groupchat, llm_config=llm_config)
 
