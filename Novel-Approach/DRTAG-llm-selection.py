@@ -1,7 +1,6 @@
 import json
 from llm_utils import callLLM
-
-agentSystemPromptPrefix = "Based on the given conversations, give your ideas to add new information and insight as a single dialog without mentioning your role. Make your dialog shorter and effective without repeating the information that already given in the converstaion."
+from prompt_consts import agentSystemPromptPrefix, conversationMgtAgentSystemPrompt, conversationMgtAgentPromptToAskForConclusion, conversationMgtAgentPromptToFindNextAgent, conversationMgtAgentPromptToAddNewAgent, conversationMgtAgentPromptToGenerateSysPromptForNewAgent
 
 # Medical Scenario
 agentsList = ["General-Ward-Doctor", "Nurse"]
@@ -14,15 +13,7 @@ location = "hospital"
 # our msg: I have a huge pain in the right lower side of my tummy. Please help.
 
 
-conversationMgtAgentSystemPrompt = "You are the manager of a conversation that happens between several LLM agents. According to the given conversation between agents and the given conversation management problem, help user to manage that conversation."
-conversationMgtAgentPromptToAskForConclusion = "We have agents: {} available. The following conversation has happened among them. The conversation is formatted as objects that contain the role of the speaker and content of the speech. Make sure all agent roles talk at least once. Conclude conversation only if agents thanking each other or agents repeat similar dialogs again. Is this conversation comes to a conclusion? Give only 'Yes' or 'No' without any reasons. \n\n {}"
-conversationMgtAgentPromptToFindNextAgent = "We have agents: {} available. The following conversation has happened among them. The conversation is formatted as objects that contain the role of the speaker and content of the speech. Which agent should talk next? Give only the agent name by one word without any explanation. For example, if you want the backend developer to talk, just type 'Backend-Developer'. Don't let the same agent to talk consecutively. \n\n {}"
-
-conversationMgtAgentPromptToAddNewAgent = "We have available agents: {}. The following conversation has happened among them. The conversation is formatted as objects that contain the role of the speaker and content of the speech. Suggest another LLM agent that should be in a {} to add a value to this conversation? Please give only one agent with its name by one word without any explanation. For exmaple, if you want to add a backend developer to the conversation, just type 'Backend-Developer'. Don't give agent names that are already available. If you don't need more LLM agents to be added, say 'No'. \n\n {}"
-conversationMgtAgentPromptToGenerateSysPromptForNewAgent = "Generate a system message for an LLM agent that act as a {} at a {}. Give only the system prompt without any additional texts or details. The following is a sample set of agents and their system prompts. \n\n {}'"
-
 globalAgentConversation = []
-
 
 def getUserMsg():
     user_message = input("GPT: What do you want to do?\nYou: ")
