@@ -1,46 +1,62 @@
-import json
 import re
 import nltk
 from nltk.stem import WordNetLemmatizer
-import matplotlib.pyplot as plt
 
 jsonFilePaths = [
     # autogen llm selection
     "Existing-Solution/Responses/GPT-4o-backup1/autogen-llm-selection.json",
     "Existing-Solution/Responses/GPT-4o-backup2/autogen-llm-selection.json",
     "Existing-Solution/Responses/GPT-4o-backup3/autogen-llm-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup4/autogen-llm-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup5/autogen-llm-selection.json",
     # DRTAG llm selection
     "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-llm-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-llm-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup4/DRTAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup5/DRTAG-llm-selection.json",
     # IAAG llm selection
     "Novel-Approach/Responses/GPT-4o-backup1/IAAG-llm-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup2/IAAG-llm-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup3/IAAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup4/IAAG-llm-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup5/IAAG-llm-selection.json",
     # autogen random selection
     "Existing-Solution/Responses/GPT-4o-backup1/autogen-random-selection.json",
     "Existing-Solution/Responses/GPT-4o-backup2/autogen-random-selection.json",
     "Existing-Solution/Responses/GPT-4o-backup3/autogen-random-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup4/autogen-random-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup5/autogen-random-selection.json",
     # DRTAG random selection
     "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-random-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-random-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup4/DRTAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup5/DRTAG-random-selection.json",
     # IAAG random selection
     "Novel-Approach/Responses/GPT-4o-backup1/IAAG-random-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup2/IAAG-random-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup3/IAAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup4/IAAG-random-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup5/IAAG-random-selection.json",
     # autogen round robin selection
     "Existing-Solution/Responses/GPT-4o-backup1/autogen-round-robin-selection.json",
     "Existing-Solution/Responses/GPT-4o-backup2/autogen-round-robin-selection.json",
     "Existing-Solution/Responses/GPT-4o-backup3/autogen-round-robin-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup4/autogen-round-robin-selection.json",
+    "Existing-Solution/Responses/GPT-4o-backup5/autogen-round-robin-selection.json",
     # DRTAG round robin selection
     "Novel-Approach/Responses/GPT-4o-backup1/DRTAG-round-robin-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup2/DRTAG-round-robin-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup3/DRTAG-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup4/DRTAG-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup5/DRTAG-round-robin-selection.json",
     # IAAG round robin selection
     "Novel-Approach/Responses/GPT-4o-backup1/IAAG-round-robin-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup2/IAAG-round-robin-selection.json",
     "Novel-Approach/Responses/GPT-4o-backup3/IAAG-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup4/IAAG-round-robin-selection.json",
+    "Novel-Approach/Responses/GPT-4o-backup5/IAAG-round-robin-selection.json",
 ]
 
 stopwords = set(nltk.corpus.stopwords.words('english'))
@@ -54,83 +70,13 @@ def clean_text(text):
     text = ' '.join([lemmatizer.lemmatize(word) for word in nltk.word_tokenize(text)])
     return text
 
-vocab = {
+ground_truth_vocab = [
     # Possible Illnesses
     "appendicitis", "gynecological", "kidney stone", "gastrointestinal", "colon cancer", "ileitis", "ovarian", "crohn disease", "colitis", "diverticulitis", "urinary tract", "musculoskeletal issue", "hernia",
     "cardiovascular", "gallbladder", "obstruction", "renal", "yersinia enterocolitica", "campylobacter jejuni", "ectopic pregnancy", "pelvic inflammatory", "endocrine disorder", "endometriosis", "inflammatory bowel",
-    # Diagnostic Plans and Treatments 
+    # Diagnostic Plans and Treatments
     "clinical examination", "blood test", "stool test", "ct", "urinalysis", "ultrasound", "surgery", "antibiotic", "pain management", "manage pain", "pain relief", "physical examination", "pysical exam", "medical history", "nephrology",
-    "endoscopic evaluation", "laparoscopy", "laparoscopic", "allergies", "anesthetic", "anesthesia", "pelvic exam", "neurological examination", "hormone level", "mri", "endoscopic evaluation", "probiotics", "urine",
-    # Preventive Actions, Prior and Post Treatment Advice  
-    "diet", "dietary", "hydrated", "hydration", "rest", "symptom diary", "fever", "nausea", "vomiting", "bowel", "dizziness", "abdominal rigidity", "stress", "breathing", "deepbreathing", "relaxation", "relax", "strenuous activity", "acupuncture", "allergy", "water", "diet", "heat", "fasting", "pain medication"
-}
-
-agentCountsAndBinaryWeight = dict()
-
-# Read data from the JSON file
-for jsonFilePath in jsonFilePaths:
-    with open(jsonFilePath, "r") as jsonFile:
-        jsonData = json.load(jsonFile)
-
-    # Count number of agents
-    agents = set()
-    for entry in jsonData:
-        agents.add(entry["role"])
-
-    # Binary weight the new knowledge
-    initialAgents = {"Patient", "General-Ward-Doctor", "Nurse"}
-    initialAgentsContent = ""
-    autoGeneratedAgentsContent = ""
-
-    for entry in jsonData:
-        if entry["role"] in initialAgents:
-            initialAgentsContent += entry["content"] + " "
-            initialAgents.remove(entry["role"])
-        else:
-            autoGeneratedAgentsContent += entry["content"] + " "
-
-    # Clean the text data and remove stopwords
-    initialAgentsCleanedContent = clean_text(initialAgentsContent)
-    autoGeneratedAgentsCleanedContent = clean_text(autoGeneratedAgentsContent)
-
-    initialAgentsTermSet = set(initialAgentsCleanedContent.split())
-    autoGeneratedAgentsTermSet = set(autoGeneratedAgentsCleanedContent.split())
-    termsToScoreConversation = vocab.intersection(autoGeneratedAgentsTermSet - initialAgentsTermSet)
-
-    filename = jsonFilePath.split("/")[-2] + '\n' + jsonFilePath.split("/")[-1]
-    agentCountsAndBinaryWeight[filename] = [(len(agents) - 1), len(termsToScoreConversation)]
-
-print("Number of agents are counted for each JSON file.")
-
-# Plot a scatter plot of agent count vs binary weight
-fig, axes = plt.subplots(1, 3, figsize=(20, 8))
-plt.rcParams.update({'font.size': 15})
-
-scatterColors = {
-    "autogen": 'orangered',
-    "DRTAG": 'lawngreen',
-    "IAAG": 'dodgerblue'
-}
-
-# Define the selection types
-selection_types = ["llm-selection", "round-robin-selection", "random-selection"]
-selection_titles = ["LLM Selection", "Round Robin Selection", "Random Selection"]
-
-for idx, selection_type in enumerate(selection_types):
-    ax = axes[idx]
-    for key, value in agentCountsAndBinaryWeight.items():
-        if selection_type in key:
-            label = (key.split("\n")[-1]).split("-")[0]
-            color = scatterColors[label]
-            ax.scatter(value[0], value[1], color=color, s=100)
-
-    ax.set_title(selection_titles[idx])
-    ax.set_xlabel("Number of Agents")
-    ax.set_ylabel("Binary Weights for New Knowledge")
-    ax.grid(True)
-
-fig.legend(loc="upper right", title="LLM-based MAS approach", labels=["Autogen", "DRTAG", "IAAG"])
-fig.suptitle("Agent Count vs Binary Weights for New Knowledge")
-plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-plt.savefig("agentCountVsNewKnowledgeBinaryWeight2.png")
-print("Scatter plot of agent count vs binary weight is saved as agentCountVsNewKnowledgeBinaryWeight.png")
+    "endoscopic evaluation", "laparoscopy", "laparoscopic", "allergies", "anesthetic", "anesthesia", "pelvic exam", "neurological examination", "hormone level", "mri", "probiotics", "urine",
+    # Preventive Actions, Prior and Post Treatment Advice
+    "diet", "dietary", "hydrated", "hydration", "rest", "symptom diary", "fever", "nausea", "vomiting", "bowel", "dizziness", "abdominal rigidity", "stress", "breathing", "deepbreathing", "relaxation", "relax", "strenuous activity", "acupuncture", "allergy", "water", "heat", "fasting", "pain medication"
+]
