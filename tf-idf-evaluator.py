@@ -68,7 +68,7 @@ sorted_columns = tfidfTable.columns[sorted_indices]
 sorted_sums = sums[sorted_indices]
 sorted_colors = [barColors[i] for i in sorted_indices]
 
-plt.figure(figsize=(20, 10))
+plt.figure(figsize=(35, 12))
 plt.rcParams.update({'font.size': 15})
 
 bars = plt.bar(sorted_columns, sorted_sums, color=sorted_colors)
@@ -109,15 +109,15 @@ autogen_scores = [score for label, score in tfidf_score_sums.items() if "autogen
 drtag_scores = [score for label, score in tfidf_score_sums.items() if "DRTAG" in label]
 iaag_scores = [score for label, score in tfidf_score_sums.items() if "IAAG" in label]
 
-autogen_llm_selection_scores = [score for label, score in tfidf_score_sums.items() if "autogen-llm-selection" in label]
-drtag_llm_selection_scores = [score for label, score in tfidf_score_sums.items() if "DRTAG-llm-selection" in label]
-iaag_llm_selection_scores = [score for label, score in tfidf_score_sums.items() if "IAAG-llm-selection" in label]
-autogen_random_selection_scores = [score for label, score in tfidf_score_sums.items() if "autogen-random-selection" in label]
-drtag_random_selection_scores = [score for label, score in tfidf_score_sums.items() if "DRTAG-random-selection" in label]
-iaag_random_selection_scores = [score for label, score in tfidf_score_sums.items() if "IAAG-random-selection" in label]
-autogen_round_robin_selection_scores = [score for label, score in tfidf_score_sums.items() if "autogen-round-robin" in label]
-drtag_round_robin_selection_scores = [score for label, score in tfidf_score_sums.items() if "DRTAG-round-robin" in label]
-iaag_round_robin_selection_scores = [score for label, score in tfidf_score_sums.items() if "IAAG-round-robin" in label]
+# autogen_llm_selection_scores = [score for label, score in tfidf_score_sums.items() if "autogen-llm-selection" in label]
+# drtag_llm_selection_scores = [score for label, score in tfidf_score_sums.items() if "DRTAG-llm-selection" in label]
+# iaag_llm_selection_scores = [score for label, score in tfidf_score_sums.items() if "IAAG-llm-selection" in label]
+# autogen_random_selection_scores = [score for label, score in tfidf_score_sums.items() if "autogen-random-selection" in label]
+# drtag_random_selection_scores = [score for label, score in tfidf_score_sums.items() if "DRTAG-random-selection" in label]
+# iaag_random_selection_scores = [score for label, score in tfidf_score_sums.items() if "IAAG-random-selection" in label]
+# autogen_round_robin_selection_scores = [score for label, score in tfidf_score_sums.items() if "autogen-round-robin" in label]
+# drtag_round_robin_selection_scores = [score for label, score in tfidf_score_sums.items() if "DRTAG-round-robin" in label]
+# iaag_round_robin_selection_scores = [score for label, score in tfidf_score_sums.items() if "IAAG-round-robin" in label]
 
 # Mann-Whitney U rank test to check if DRTAG is better than Autogen
 stat, p = mannwhitneyu(drtag_scores, autogen_scores, alternative='greater')
@@ -145,63 +145,3 @@ if p < standardSignificanceLevel:
 else:
     conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG contains more keywords relevant to the scenario than discussions generated using IAAG.")
 conclusions.append("")
-
-# Mann-Whitney U rank test to check if DRTAG LLM selection is better than Autogen LLM selection
-stat, p = mannwhitneyu(drtag_llm_selection_scores, autogen_llm_selection_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (DRTAG LLM Selection's TF-IDF scores are better than Autogen LLM Selection's TF-IDF scores): H={stat:.3f}, p={p:.4f}")
-if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG LLM Selection contains more keywords relevant to the scenario than discussions generated using Autogen LLM Selection.")
-else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG LLM Selection contains more keywords relevant to the scenario than discussions generated using Autogen LLM Selection.")
-conclusions.append("")
-
-# Mann-Whitney U rank test to check if IAAG LLM selection is better than Autogen LLM selection
-stat, p = mannwhitneyu(iaag_llm_selection_scores, autogen_llm_selection_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (IAAG LLM Selection's TF-IDF scores are better than Autogen LLM Selection's TF-IDF scores): H={stat:.3f}, p={p:.4f}")
-if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG LLM Selection contains more keywords relevant to the scenario than discussions generated using Autogen LLM Selection.")
-else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using IAAG LLM Selection contains more keywords relevant to the scenario than discussions generated using Autogen LLM Selection.")
-conclusions.append("")
-
-# Mann-Whitney U rank test to check if DRTAG Random selection is better than Autogen Random selection
-stat, p = mannwhitneyu(drtag_random_selection_scores, autogen_random_selection_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (DRTAG Random Selection's TF-IDF scores are better than Autogen Random Selection's TF-IDF scores): H={stat:.3f}, p={p:.4f}")
-if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG Random Selection contains more keywords relevant to the scenario than discussions generated using Autogen Random Selection.")
-else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG Random Selection contains more keywords relevant to the scenario than discussions generated using Autogen Random Selection.")
-conclusions.append("")
-
-# Mann-Whitney U rank test to check if IAAG Random selection is better than Autogen Random selection
-stat, p = mannwhitneyu(iaag_random_selection_scores, autogen_random_selection_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (IAAG Random Selection's TF-IDF scores are better than Autogen Random Selection's TF-IDF scores): H={stat:.3f}, p={p:.4f}")
-if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG Random Selection contains more keywords relevant to the scenario than discussions generated using Autogen Random Selection.")
-else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using IAAG Random Selection contains more keywords relevant to the scenario than discussions generated using Autogen Random Selection.")
-conclusions.append("")
-
-# Mann-Whitney U rank test to check if DRTAG Round Robin selection is better than Autogen Round Robin selection
-stat, p = mannwhitneyu(drtag_round_robin_selection_scores, autogen_round_robin_selection_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (DRTAG Round Robin Selection's TF-IDF scores are better than Autogen Round Robin Selection's TF-IDF scores): H={stat:.3f}, p={p:.4f}")
-if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG Round Robin Selection contains more keywords relevant to the scenario than discussions generated using Autogen Round Robin Selection.")
-else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG Round Robin Selection contains more keywords relevant to the scenario than discussions generated using Autogen Round Robin Selection.")
-conclusions.append("")
-
-# Mann-Whitney U rank test to check if IAAG Round Robin selection is better than Autogen Round Robin selection
-stat, p = mannwhitneyu(iaag_round_robin_selection_scores, autogen_round_robin_selection_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (IAAG Round Robin Selection's TF-IDF scores are better than Autogen Round Robin Selection's TF-IDF scores): H={stat:.3f}, p={p:.4f}")
-if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG Round Robin Selection contains more keywords relevant to the scenario than discussions generated using Autogen Round Robin Selection.")
-else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using IAAG Round Robin Selection contains more keywords relevant to the scenario than discussions generated using Autogen Round Robin Selection.")
-conclusions.append("")
-
-# Save conclusions to a text file
-with open("tfidf-results-analysis-conclusions.txt", "w") as file:
-    for conclusion in conclusions:
-        file.write(conclusion + "\n")
-print("All conclusions are written to the file 'tfidf-results-analysis-conclusions.txt'.")

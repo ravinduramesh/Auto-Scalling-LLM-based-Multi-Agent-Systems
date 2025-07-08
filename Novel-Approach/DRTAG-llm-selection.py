@@ -47,14 +47,14 @@ def askConversationMgtAgentToConcludeConversation():
     messages = [{"role": "system", "content": conversationMgtAgentSystemPrompt}, {"role": "user", "content": formattedConversationMgtAgentPromptToAskForConclusion}]
     content = callLLM(messages)
     print("manager-conclusion: " + content)
-    return content
+    return content.strip(".")
 
 def askConversationMgtAgentToAddNewAgent():
     formattedConversationMgtAgentPromptToAddNewAgent = conversationMgtAgentPromptToAddNewAgent.format(agentsList, location, globalAgentConversation)
     messages = [{"role": "system", "content": conversationMgtAgentSystemPrompt}, {"role": "user", "content": formattedConversationMgtAgentPromptToAddNewAgent}]
     content = callLLM(messages)
     print("manager-add-agent: " + content)
-    return content
+    return content.strip(".")
 
 def askConversationMgtAgentToGenerateSysPromptForNewAgent(newAgentName):
     formattedConversationMgtAgentPromptToGenerateSysPromptForNewAgent = conversationMgtAgentPromptToGenerateSysPromptForNewAgent.format(newAgentName, location, systemPromptDict)

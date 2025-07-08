@@ -34,7 +34,7 @@ for label in sorted_labels:
     else:
         sorted_colors.append('dodgerblue')
 
-plt.figure(figsize=(25, 10))
+plt.figure(figsize=(35, 12))
 plt.rcParams.update({'font.size': 15})
 
 bars = plt.bar(sorted_labels, sorted_scores, color=sorted_colors)
@@ -56,9 +56,7 @@ print("MTLD graph is plotted successfully.")
 
 
 # Statistical analysis with Mann-Whitney U rank test on MTLD scores
-import numpy as np
 from scipy.stats import mannwhitneyu
-import scikit_posthocs as sp
 
 standardSignificanceLevel = 0.05
 conclusions = []
@@ -68,15 +66,15 @@ autogen_scores = [score for label, score in mtld_scores.items() if label.split("
 drtag_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("DRTAG")]
 iaag_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("IAAG")]
 
-autogen_llm_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("autogen-llm-selection")]
-drtag_llm_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("DRTAG-llm-selection")]
-iaag_llm_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("IAAG-llm-selection")]
-autogen_random_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("autogen-random-selection")]
-drtag_random_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("DRTAG-random-selection")]
-iaag_random_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("IAAG-random-selection")]
-autogen_round_robin_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("autogen-round-robin-selection")]
-drtag_round_robin_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("DRTAG-round-robin-selection")]
-iaag_round_robin_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("IAAG-round-robin-selection")]
+# autogen_llm_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("autogen-llm-selection")]
+# drtag_llm_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("DRTAG-llm-selection")]
+# iaag_llm_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("IAAG-llm-selection")]
+# autogen_random_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("autogen-random-selection")]
+# drtag_random_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("DRTAG-random-selection")]
+# iaag_random_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("IAAG-random-selection")]
+# autogen_round_robin_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("autogen-round-robin-selection")]
+# drtag_round_robin_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("DRTAG-round-robin-selection")]
+# iaag_round_robin_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("IAAG-round-robin-selection")]
 
 # Mann-Whitney U rank test to check if DRTAG is better than Autogen
 stat, p = mannwhitneyu(drtag_scores, autogen_scores, alternative='greater')
@@ -104,63 +102,3 @@ if p < standardSignificanceLevel:
 else:
     conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG discuss the topic in broader and deeper way than discussions generated using IAAG.")
 conclusions.append("")
-
-# Mann-Whitney U rank test to check if DRTAG LLM selection is better than Autogen LLM selection
-stat, p = mannwhitneyu(drtag_llm_selection_scores, autogen_llm_selection_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (DRTAG LLM selection's MTLD scores are better than Autogen LLM selection's MTLD scores): H={stat:.3f}, p={p:.4f}")
-if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG LLM selection discuss the topic in broader and deeper way than discussions generated using Autogen LLM selection.")
-else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG LLM selection discuss the topic in broader and deeper way than discussions generated using Autogen LLM selection.")
-conclusions.append("")
-
-# Mann-Whitney U rank test to check if DRTAG random selection is better than Autogen random selection
-stat, p = mannwhitneyu(drtag_random_selection_scores, autogen_random_selection_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (DRTAG random selection's MTLD scores are better than Autogen random selection's MTLD scores): H={stat:.3f}, p={p:.4f}")
-if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG random selection discuss the topic in broader and deeper way than discussions generated using Autogen random selection.")
-else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG random selection discuss the topic in broader and deeper way than discussions generated using Autogen random selection.")
-conclusions.append("")
-
-# Mann-Whitney U rank test to check if DRTAG round robin selection is better than Autogen round robin selection
-stat, p = mannwhitneyu(drtag_round_robin_selection_scores, autogen_round_robin_selection_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (DRTAG round robin selection's MTLD scores are better than Autogen round robin selection's MTLD scores): H={stat:.3f}, p={p:.4f}")
-if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG round robin selection discuss the topic in broader and deeper way than discussions generated using Autogen round robin selection.")
-else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG round robin selection discuss the topic in broader and deeper way than discussions generated using Autogen round robin selection.")
-conclusions.append("")
-
-# Mann-Whitney U rank test to check if IAAG LLM selection is better than Autogen LLM selection
-stat, p = mannwhitneyu(iaag_llm_selection_scores, autogen_llm_selection_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (IAAG LLM selection's MTLD scores are better than Autogen LLM selection's MTLD scores): H={stat:.3f}, p={p:.4f}")
-if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG LLM selection discuss the topic in broader and deeper way than discussions generated using Autogen LLM selection.")
-else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using IAAG LLM selection discuss the topic in broader and deeper way than discussions generated using Autogen LLM selection.")
-conclusions.append("")
-
-# Mann-Whitney U rank test to check if IAAG random selection is better than Autogen random selection
-stat, p = mannwhitneyu(iaag_random_selection_scores, autogen_random_selection_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (IAAG random selection's MTLD scores are better than Autogen random selection's MTLD scores): H={stat:.3f}, p={p:.4f}")
-if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG random selection discuss the topic in broader and deeper way than discussions generated using Autogen random selection.")
-else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using IAAG random selection discuss the topic in broader and deeper way than discussions generated using Autogen random selection.")
-conclusions.append("")
-
-# Mann-Whitney U rank test to check if IAAG round robin selection is better than Autogen round robin selection
-stat, p = mannwhitneyu(iaag_round_robin_selection_scores, autogen_round_robin_selection_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (IAAG round robin selection's MTLD scores are better than Autogen round robin selection's MTLD scores): H={stat:.3f}, p={p:.4f}")
-if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG round robin selection discuss the topic in broader and deeper way than discussions generated using Autogen round robin selection.")
-else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using IAAG round robin selection discuss the topic in broader and deeper way than discussions generated using Autogen round robin selection.")
-conclusions.append("")
-
-# Save conclusions to a text file
-with open("mtld-results-analysis-conclusions.txt", "w") as file:
-    for conclusion in conclusions:
-        file.write(conclusion + "\n")
-print("All conclusions are written to the file 'mtld-results-analysis-conclusions.txt'.")
