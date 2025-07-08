@@ -118,3 +118,9 @@ if p < standardSignificanceLevel:
 else:
     conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG contains more keywords relavant to the scenario than discussions generated using IAAG.")
 conclusions.append("")
+
+# Save conclusions to a text file
+with open("binary_weighting_conclusions.txt", "w") as file:
+    for conclusion in conclusions:
+        file.write(conclusion + "\n")
+print("Binary weighting conclusions saved to binary_weighting_conclusions.txt.")

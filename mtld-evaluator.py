@@ -102,3 +102,9 @@ if p < standardSignificanceLevel:
 else:
     conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG discuss the topic in broader and deeper way than discussions generated using IAAG.")
 conclusions.append("")
+
+#Save conclusions to a text file
+with open("mtld_conclusions.txt", "w") as file:
+    for conclusion in conclusions:
+        file.write(conclusion + "\n")
+print("MTLD conclusions saved to mtld_conclusions.txt.")

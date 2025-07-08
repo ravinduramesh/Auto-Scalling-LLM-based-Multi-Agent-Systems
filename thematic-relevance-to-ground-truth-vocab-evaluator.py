@@ -114,3 +114,9 @@ if p < standardSignificanceLevel:
 else:
     conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG contains more keywords relavant to the scenario than discussions generated using IAAG.")
 conclusions.append("")
+
+# Save conclusions to a text file
+with open("thematic_relevance_conclusions.txt", "w") as f:
+    for conclusion in conclusions:
+        f.write(conclusion + "\n")
+print("Thematic relevance conclusions saved to thematic_relevance_conclusions.txt.")
