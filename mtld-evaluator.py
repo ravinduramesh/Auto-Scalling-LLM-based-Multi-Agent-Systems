@@ -18,7 +18,7 @@ for jsonFilePath in jsonFilePaths:
     cleaned_text = clean_text(text)
     tokens = cleaned_text.split()
     mtld_score = ld.mtld(tokens)
-    filename = jsonFilePath.split("/")[-2] + '\n' + jsonFilePath.split("/")[-1]
+    filename = 'conv' + jsonFilePath.split("/")[-2][-2:] + '-' + jsonFilePath.split("/")[-1]
     mtld_scores[filename] = mtld_score
 
 # Sort by MTLD score
@@ -27,9 +27,9 @@ sorted_labels = [item[0] for item in sorted_items]
 sorted_scores = [item[1] for item in sorted_items]
 sorted_colors = []
 for label in sorted_labels:
-    if label.split("\n")[1].startswith("autogen"):
+    if label.split("-")[1].startswith("autogen"):
         sorted_colors.append('orangered')
-    elif label.split("\n")[1].startswith("DRTAG"):
+    elif label.split("-")[1].startswith("DRTAG"):
         sorted_colors.append('lawngreen')
     else:
         sorted_colors.append('dodgerblue')
@@ -62,9 +62,9 @@ standardSignificanceLevel = 0.05
 conclusions = []
 
 # Group MTLD scores by label
-autogen_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("autogen")]
-drtag_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("DRTAG")]
-iaag_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("IAAG")]
+autogen_scores = [score for label, score in mtld_scores.items() if label.split("-")[1].startswith("autogen")]
+drtag_scores = [score for label, score in mtld_scores.items() if label.split("-")[1].startswith("DRTAG")]
+iaag_scores = [score for label, score in mtld_scores.items() if label.split("-")[1].startswith("IAAG")]
 
 # autogen_llm_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("autogen-llm-selection")]
 # drtag_llm_selection_scores = [score for label, score in mtld_scores.items() if label.split("\n")[1].startswith("DRTAG-llm-selection")]

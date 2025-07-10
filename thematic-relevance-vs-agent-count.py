@@ -45,7 +45,7 @@ for jsonFilePath in jsonFilePaths:
     agent_count = count_agents_in_json(jsonFilePath)
     
     # Store agent count and thematic relevance
-    filename = jsonFilePath.split("/")[-2] + '\n' + jsonFilePath.split("/")[-1]
+    filename = 'conv' + jsonFilePath.split('/')[-2][-2:] + '-' + jsonFilePath.split('/')[-1]
     agentCountsAndThematicRelevance[filename] = [agent_count, thematic_relevance]
 
 print("Agent counts and thematic relevance scores calculated for each JSON file.")
@@ -68,7 +68,7 @@ for idx, selection_type in enumerate(selection_types):
     ax = axes[idx]
     for key, value in agentCountsAndThematicRelevance.items():
         if selection_type in key:
-            label = (key.split("\n")[-1]).split("-")[0]
+            label = key.split("-")[1]
             color = scatterColors[label]
             ax.scatter(value[0], value[1], color=color, s=100)
 

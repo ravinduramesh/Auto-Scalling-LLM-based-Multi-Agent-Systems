@@ -22,9 +22,9 @@ for jsonFilePath in jsonFilePaths:
         agents.add(entry["role"])
     
     # Get first tfidf value in tfidfSums
-    tfidfSumValue = tfidfSums[jsonFilePath.split("/")[-2] + '/' + jsonFilePath.split("/")[-1]]
+    tfidfSumValue = tfidfSums['conv' + jsonFilePath.split('/')[-2][-2:] + '-' + jsonFilePath.split('/')[-1]]
 
-    agentCountsAndTfIdf[jsonFilePath.split("/")[-2] + '\n' + jsonFilePath.split("/")[-1]] = [(len(agents) - 1), tfidfSumValue]
+    agentCountsAndTfIdf['conv' + jsonFilePath.split('/')[-2][-2:] + '-' + jsonFilePath.split('/')[-1]] = [(len(agents) - 1), tfidfSumValue]
 
 print("Number of agents are counted for each JSON file.")
 
@@ -46,7 +46,7 @@ for idx, selection_type in enumerate(selection_types):
     ax = axes[idx]
     for key, value in agentCountsAndTfIdf.items():
         if selection_type in key:
-            label = (key.split("\n")[-1]).split("-")[0]
+            label = key.split("-")[1]
             color = scatterColors[label]
             ax.scatter(value[0], value[1], color=color, s=100)
 

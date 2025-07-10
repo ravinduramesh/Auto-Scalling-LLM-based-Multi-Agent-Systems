@@ -29,7 +29,7 @@ for jsonFilePath in jsonFilePaths:
     similarities = cosine_similarity(utterance_embeddings, vocab_embedding.reshape(1, -1)).flatten()
     thematic_relevance = float(np.mean(similarities))
 
-    filename = jsonFilePath.split("/")[-2] + '\n' + jsonFilePath.split("/")[-1]
+    filename = 'conv' + jsonFilePath.split('/')[-2][-2:] + '-' + jsonFilePath.split('/')[-1]
     thematic_relevance_scores[filename] = thematic_relevance
 
 # Sort and plot
@@ -38,9 +38,9 @@ sorted_tc_labels = [item[0] for item in sorted_tc_items]
 sorted_tc_scores = [item[1] for item in sorted_tc_items]
 sorted_tc_colors = []
 for label in sorted_tc_labels:
-    if label.split("\n")[1].startswith("autogen"):
+    if label.split("-")[1].startswith("autogen"):
         sorted_tc_colors.append('orangered')
-    elif label.split("\n")[1].startswith("DRTAG"):
+    elif label.split("-")[1].startswith("DRTAG"):
         sorted_tc_colors.append('lawngreen')
     else:
         sorted_tc_colors.append('dodgerblue')
@@ -92,27 +92,27 @@ iaag_scores = [score for label, score in thematic_relevance_scores.items() if "I
 stat, p = mannwhitneyu(drtag_scores, autogen_scores, alternative='greater')
 conclusions.append(f"Mann-Whitney U Test (DRTAG's Thematic Relevance scores are better than Autogen's Thematic Relevance scores): H={stat:.3f}, p={p:.4f}")
 if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG contains more keywords relavant to the scenario than discussions generated using Autogen.")
+    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG are more thematically relavant to the scenario than discussions generated using Autogen.")
 else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG contains more keywords relavant to the scenario than discussions generated using Autogen.")
+    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG are more thematically relavant to the scenario than discussions generated using Autogen.")
 conclusions.append("")
 
 # Mann-Whitney U rank test to check if IAAG is better than Autogen
 stat, p = mannwhitneyu(iaag_scores, autogen_scores, alternative='greater')
 conclusions.append(f"Mann-Whitney U Test (IAAG's Thematic Relevance scores are better than Autogen's Thematic Relevance scores): H={stat:.3f}, p={p:.4f}")
 if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG contains more keywords relavant to the scenario than discussions generated using Autogen.")
+    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG are more thematically relavant to the scenario than discussions generated using Autogen.")
 else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using IAAG contains more keywords relavant to the scenario than discussions generated using Autogen.")
+    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using IAAG are more thematically relavant to the scenario than discussions generated using Autogen.")
 conclusions.append("")
 
 # Mann-Whitney U rank test to check if DRTAG is better than IAAG
 stat, p = mannwhitneyu(drtag_scores, iaag_scores, alternative='greater')
 conclusions.append(f"Mann-Whitney U Test (DRTAG's Thematic Relevance scores are better than IAAG's Thematic Relevance scores): H={stat:.3f}, p={p:.4f}")
 if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG contains more keywords relavant to the scenario than discussions generated using IAAG.")
+    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG are more thematically relavant to the scenario than discussions generated using IAAG.")
 else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG contains more keywords relavant to the scenario than discussions generated using IAAG.")
+    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG are more thematically relavant to the scenario than discussions generated using IAAG.")
 conclusions.append("")
 
 # Save conclusions to a text file

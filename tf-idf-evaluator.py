@@ -36,8 +36,7 @@ tfidfMatrix = vectorizer.fit_transform(cleanedCorpus)
 outputVocabulary = vectorizer.get_feature_names_out()
 documentNames = []
 for path in jsonFilePaths:
-    splitPath = path.split('/')
-    documentNames.append(splitPath[-2]+'/'+splitPath[-1])
+    documentNames.append('conv' + path.split('/')[-2][-2:] + '-' + path.split('/')[-1])
 
 tfidfArray = tfidfMatrix.toarray()
 transposedTfidfArray = tfidfArray.T
@@ -48,16 +47,13 @@ print("TF-IDF table is created and saved as tfidf-table.csv.")
 
 sums = tfidfTable.iloc[:, 0:].sum(axis=0)
 
-# convert '/' in column in tfidfTable to '\n' for better readability
-tfidfTable.columns = [col.replace('/', '\n') for col in tfidfTable.columns]
-
 # Create colors and labels for each bar
 barColors = []
 labels = []
 for label in tfidfTable.columns[0:]:
-    if label.split("\n")[1].startswith("autogen"):
+    if label.split("-")[1].startswith("autogen"):
         barColors.append('orangered')
-    elif label.split("\n")[1].startswith("DRTAG"):
+    elif label.split("-")[1].startswith("DRTAG"):
         barColors.append('lawngreen')
     else:
         barColors.append('dodgerblue')
@@ -88,7 +84,7 @@ for label in ['Autogen', 'DRTAG', 'IAAG']:
 plt.legend(legend_handles, legend_labels, loc='upper right')
 plt.tight_layout()
 plt.savefig("tfidfSumsOfConversations.png")
-print("TF-IDF sums are saved as tfIdfSums.png.")
+print("TF-IDF sums are saved as tfidfSumsOfConversations.png.")
 
 
 # Statistical analysis with Mann-Whitney U rank test on tf-idf summasion scores
@@ -123,27 +119,27 @@ iaag_scores = [score for label, score in tfidf_score_sums.items() if "IAAG" in l
 stat, p = mannwhitneyu(drtag_scores, autogen_scores, alternative='greater')
 conclusions.append(f"Mann-Whitney U Test (DRTAG's TF-IDF scores are better than Autogen's TF-IDF scores): H={stat:.3f}, p={p:.4f}")
 if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG contains more keywords relevant to the scenario than discussions generated using Autogen.")
+    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG has utilized domain-specific terminologies more than discussions generated using Autogen.")
 else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG contains more keywords relevant to the scenario than discussions generated using Autogen.")
+    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG has utilized domain-specific terminologies more than discussions generated using Autogen.")
 conclusions.append("")
 
 # Mann-Whitney U rank test to check if IAAG is better than Autogen
 stat, p = mannwhitneyu(iaag_scores, autogen_scores, alternative='greater')
 conclusions.append(f"Mann-Whitney U Test (IAAG's TF-IDF scores are better than Autogen's TF-IDF scores): H={stat:.3f}, p={p:.4f}")
 if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG contains more keywords relevant to the scenario than discussions generated using Autogen.")
+    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG has utilized domain-specific terminologies more than discussions generated using Autogen.")
 else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using IAAG contains more keywords relevant to the scenario than discussions generated using Autogen.")
+    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using IAAG has utilized domain-specific terminologies more than discussions generated using Autogen.")
 conclusions.append("")
 
 # Mann-Whitney U rank test to check if DRTAG is better than IAAG
 stat, p = mannwhitneyu(drtag_scores, iaag_scores, alternative='greater')
 conclusions.append(f"Mann-Whitney U Test (DRTAG's TF-IDF scores are better than IAAG's TF-IDF scores): H={stat:.3f}, p={p:.4f}")
 if p < standardSignificanceLevel:
-    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG contains more keywords relevant to the scenario than discussions generated using IAAG.")
+    conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG has utilized domain-specific terminologies more than discussions generated using IAAG.")
 else:
-    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG contains more keywords relevant to the scenario than discussions generated using IAAG.")
+    conclusions.append("Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG has utilized domain-specific terminologies more than discussions generated using IAAG.")
 conclusions.append("")
 
 # Save conclusions to a text file

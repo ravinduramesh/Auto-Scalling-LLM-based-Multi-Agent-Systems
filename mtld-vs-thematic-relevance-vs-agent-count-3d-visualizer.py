@@ -95,7 +95,7 @@ for jsonFilePath in jsonFilePaths:
     thematic_relevance = calculate_thematic_relevance(text, vocab_embedding, bert_model)
     
     # Get approach and selection info
-    filename = jsonFilePath.split("/")[-2] + '\n' + jsonFilePath.split("/")[-1]
+    filename = 'conv' + jsonFilePath.split("/")[-2][-2:] + '-' + jsonFilePath.split("/")[-1]
     approach, selection, color, marker = get_approach_info(filename)
     
     data_points.append({
