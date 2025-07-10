@@ -64,7 +64,7 @@ sorted_columns = tfidfTable.columns[sorted_indices]
 sorted_sums = sums[sorted_indices]
 sorted_colors = [barColors[i] for i in sorted_indices]
 
-plt.figure(figsize=(35, 12))
+plt.figure(figsize=(25, 12))
 plt.rcParams.update({'font.size': 15})
 
 bars = plt.bar(sorted_columns, sorted_sums, color=sorted_colors)

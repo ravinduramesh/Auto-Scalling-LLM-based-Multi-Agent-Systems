@@ -45,7 +45,7 @@ for label in sorted_tc_labels:
     else:
         sorted_tc_colors.append('dodgerblue')
 
-plt.figure(figsize=(35, 12))
+plt.figure(figsize=(25, 12))
 plt.rcParams.update({'font.size': 15})
 bars = plt.bar(sorted_tc_labels, sorted_tc_scores, color=sorted_tc_colors)
 plt.xticks(rotation=90)
