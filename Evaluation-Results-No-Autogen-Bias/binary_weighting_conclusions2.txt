@@ -1,0 +1,9 @@
+Mann-Whitney U Test (DRTAG's Binary Weighting scores are better than Autogen's Binary Weighting scores): H=900.000, p=0.0000
+Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG contains more keywords relavant to the scenario than discussions generated using Autogen.
+
+Mann-Whitney U Test (IAAG's Binary Weighting scores are better than Autogen's Binary Weighting scores): H=879.500, p=0.0000
+Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG contains more keywords relavant to the scenario than discussions generated using Autogen.
+
+Mann-Whitney U Test (DRTAG's Binary Weighting scores are better than IAAG's Binary Weighting scores): H=539.000, p=0.0948
+Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG contains more keywords relavant to the scenario than discussions generated using IAAG.
+

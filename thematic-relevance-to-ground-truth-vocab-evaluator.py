@@ -49,8 +49,8 @@ plt.figure(figsize=(35, 12))
 plt.rcParams.update({'font.size': 15})
 bars = plt.bar(sorted_tc_labels, sorted_tc_scores, color=sorted_tc_colors)
 plt.xticks(rotation=90)
-plt.ylabel("Thematic Relevance")
-plt.title("Conversation Thematic Relevance to The Ground Truth Vocabulary (BERT Embeddings)")
+plt.ylabel("Thematic Relevance (BERTScore)")
+plt.title("Conversation Thematic Relevance to The Ground Truth Vocabulary")
 
 from matplotlib.patches import Patch
 legend_elements = [
