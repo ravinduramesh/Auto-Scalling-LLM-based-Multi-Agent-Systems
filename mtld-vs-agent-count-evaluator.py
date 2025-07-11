@@ -66,3 +66,19 @@ fig.suptitle("Agent Count vs MTLD Score")
 plt.tight_layout(rect=[0, 0.03, 1, 0.95])
 plt.savefig("mtldScoreVsAgentCount.png")
 print("Scatter plot of agent count vs MTLD score is saved as mtldScoreVsAgentCount.png")
+
+# Measure the correlation between agent count and binary weighting score
+import numpy as np
+agent_counts = np.array([value[0] for value in agentCountsAndMtld.values()])
+mtld_scores = np.array([value[1] for value in agentCountsAndMtld.values()])
+
+correlation = np.corrcoef(agent_counts, mtld_scores)[0, 1]
+print(f"Correlation between agent count and MTLD score: {correlation:.2f}")
+if abs(correlation) > 0.5:
+    conclusion = "There is a strong correlation between agent count and MTLD score."
+else:
+    conclusion = "There is a weak correlation between agent count and MTLD score."
+# Save the conclusion to a text file
+with open("mtld_vs_agent_count_conclusion.txt", "w") as conclusion_file:
+    conclusion_file.write(f"Correlation between agent count and MTLD score: {correlation:.2f}\n")
+    conclusion_file.write(conclusion)

@@ -1,9 +1,0 @@
-Mann-Whitney U Test (DRTAG's MTLD scores are better than Autogen's MTLD scores): H=860.000, p=0.0000
-Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG discuss the topic in broader and deeper way than discussions generated using Autogen.
-
-Mann-Whitney U Test (IAAG's MTLD scores are better than Autogen's MTLD scores): H=833.000, p=0.0000
-Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG discuss the topic in broader and deeper way than discussions generated using Autogen.
-
-Mann-Whitney U Test (DRTAG's MTLD scores are better than IAAG's MTLD scores): H=496.000, p=0.2506
-Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG discuss the topic in broader and deeper way than discussions generated using IAAG.
-

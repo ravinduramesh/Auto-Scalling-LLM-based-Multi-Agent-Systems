@@ -88,3 +88,18 @@ fig.suptitle("Agent Count vs Thematic Relevance to Ground Truth Vocabulary")
 plt.tight_layout(rect=[0, 0.03, 1, 0.95])
 plt.savefig("thematicRelevanceVsAgentCount.png")
 print("Scatter plot of agent count vs thematic relevance is saved as thematicRelevanceVsAgentCount.png.")
+
+# Measure the correlation between agent count and thematic relevance
+agent_counts = [value[0] for value in agentCountsAndThematicRelevance.values()]
+thematic_relevances = [value[1] for value in agentCountsAndThematicRelevance.values()]
+
+correlation = np.corrcoef(agent_counts, thematic_relevances)[0, 1]
+print(f"Correlation between agent count and thematic relevance: {correlation:.2f}")
+
+# Save the correlation result to a file
+with open("thematic_relevance_correlation.txt", "w") as f:
+    f.write(f"Correlation between agent count and thematic relevance: {correlation:.2f}\n")
+if abs(correlation) > 0.5:
+    f.write("There is a strong correlation between agent count and thematic relevance.\n")
+else:
+    f.write("There is a weak correlation between agent count and thematic relevance.\n")

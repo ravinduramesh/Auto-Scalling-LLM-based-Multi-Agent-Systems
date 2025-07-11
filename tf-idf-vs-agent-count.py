@@ -66,3 +66,17 @@ fig.suptitle("Agent Count vs TF-IDF Sum for Keywords in Conversations")
 plt.tight_layout(rect=[0, 0.03, 1, 0.95])
 plt.savefig("tfIdfSumsVsAgentCount.png")
 print("Scatter plot of agent count vs TF-IDF sum is saved as tfIdfSumsVsAgentCount.png.")
+
+# Measure the correlation between agent count and tf-idf sum
+agent_counts = [value[0] for value in agentCountsAndTfIdf.values()]
+tfidf_sums = [value[1] for value in agentCountsAndTfIdf.values()]
+
+correlation = pd.Series(agent_counts).corr(pd.Series(tfidf_sums))
+print(f"Correlation between agent count and TF-IDF sum: {correlation:.2f}")
+# Save the correlation result to a file
+with open("tfidf_correlation.txt", "w") as f:
+    f.write(f"Correlation between agent count and TF-IDF sum: {correlation:.2f}\n")
+if abs(correlation) > 0.5:
+    f.write("There is a strong correlation between agent count and TF-IDF sum.\n")
+else:
+    f.write("There is a weak correlation between agent count and TF-IDF sum.\n")

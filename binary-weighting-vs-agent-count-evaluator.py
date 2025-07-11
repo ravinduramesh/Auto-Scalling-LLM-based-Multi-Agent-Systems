@@ -79,3 +79,21 @@ fig.suptitle("Agent Count vs Task Related Content Coverage (Binary Weighting Sco
 plt.tight_layout(rect=[0, 0.03, 1, 0.95])
 plt.savefig("binaryWeightingScoreVsAgentCount.png")
 print("Scatter plot of agent count vs binary weighting score is saved as binaryWeightingScoreVsAgentCount.png")
+
+# Measure the correlation between agent count and binary weighting score
+import numpy as np
+agent_counts = []
+binary_weights = []
+
+for key, value in agentCountsAndBinaryWeight.items():
+    agent_counts.append(value[0])
+    binary_weights.append(value[1])
+correlation = np.corrcoef(agent_counts, binary_weights)[0, 1]
+if abs(correlation) > 0.5:
+    conclusion = f"Correlation between agent count and binary weighting score: {correlation:.2f}" + " There is a strong correlation between agent count and binary weighting score."
+else:
+    conclusion = f"Correlation between agent count and binary weighting score: {correlation:.2f}" + " There is a weak correlation between agent count and binary weighting score."
+# Save the conclusion to a text file
+with open("binary_weighting_vs_agent_count_conclusion.txt", "w") as conclusion_file:
+    conclusion_file.write(conclusion)
+print("Correlation between agent count and binary weighting score is calculated and saved in binary_weighting_vs_agent_count_conclusion.txt.")

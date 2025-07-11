@@ -1,9 +1,0 @@
-Mann-Whitney U Test (DRTAG's topical consistency scores are lower than Autogen's topical consistency scores): H=728.000, p=1.0000
-Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG has lower topical consistency than discussions generated using Autogen. This means that DRTAG discussions do not necessarily explore the topic with more depth and breadth in each dialogue compared to Autogen discussions.
-
-Mann-Whitney U Test (IAAG's topical consistency scores are lower than Autogen's topical consistency scores): H=759.000, p=1.0000
-Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using IAAG has lower topical consistency than discussions generated using Autogen. This means that IAAG discussions do not necessarily explore the topic with more depth and breadth in each dialogue compared to Autogen discussions.
-
-Mann-Whitney U Test (DRTAG's topical consistency scores are lower than IAAG's topical consistency scores): H=423.000, p=0.3476
-Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG has lower topical consistency than discussions generated using IAAG. This means that DRTAG discussions do not necessarily explore the topic with more depth and breadth in each dialogue compared to IAAG discussions.
-

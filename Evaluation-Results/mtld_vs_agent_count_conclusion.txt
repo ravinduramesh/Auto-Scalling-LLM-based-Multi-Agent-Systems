@@ -1,0 +1,2 @@
+Correlation between agent count and MTLD score: 0.42
+There is a weak correlation between agent count and MTLD score.

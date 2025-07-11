@@ -1,0 +1,1 @@
+Correlation between agent count and binary weighting score: 0.75 There is a strong correlation between agent count and binary weighting score.
