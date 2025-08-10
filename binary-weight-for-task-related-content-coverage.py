@@ -70,9 +70,8 @@ plt.savefig("binaryWeightingScoresOfConversations2.png")
 print("Graph is plotted successfully.")
 
 # Statistical analysis with Mann-Whitney U rank test on binary weighting scores
-import numpy as np
 from scipy.stats import mannwhitneyu
-import scikit_posthocs as sp
+from cliffs_delta import cliffs_delta
 
 standardSignificanceLevel = 0.05
 conclusions = []
@@ -94,7 +93,10 @@ iaag_scores = [score for label, score in conversationScores.items() if "IAAG" in
 
 # Mann-Whitney U rank test to check if DRTAG is better than Autogen
 stat, p = mannwhitneyu(drtag_scores, autogen_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (DRTAG's Binary Weighting scores are better than Autogen's Binary Weighting scores): H={stat:.3f}, p={p:.4f}")
+delta_value, delta_magnitude = cliffs_delta(drtag_scores, autogen_scores)
+conclusions.append("DRTAG's Binary Weighting scores are better than Autogen's Binary Weighting scores")
+conclusions.append(f"Mann-Whitney U Test: H={stat:.3f}, p={p:.4f}")
+conclusions.append(f"Cliff's Delta: {delta_value:.3f} ({delta_magnitude})")
 if p < standardSignificanceLevel:
     conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG contains more keywords relavant to the scenario than discussions generated using Autogen.")
 else:
@@ -103,7 +105,10 @@ conclusions.append("")
 
 # Mann-Whitney U rank test to check if IAAG is better than Autogen
 stat, p = mannwhitneyu(iaag_scores, autogen_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (IAAG's Binary Weighting scores are better than Autogen's Binary Weighting scores): H={stat:.3f}, p={p:.4f}")
+delta_value, delta_magnitude = cliffs_delta(iaag_scores, autogen_scores)
+conclusions.append("IAAG's Binary Weighting scores are better than Autogen's Binary Weighting scores")
+conclusions.append(f"Mann-Whitney U Test: H={stat:.3f}, p={p:.4f}")
+conclusions.append(f"Cliff's Delta: {delta_value:.3f} ({delta_magnitude})")
 if p < standardSignificanceLevel:
     conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG contains more keywords relavant to the scenario than discussions generated using Autogen.")
 else:
@@ -112,7 +117,10 @@ conclusions.append("")
 
 # Mann-Whitney U rank test to check if DRTAG is better than IAAG
 stat, p = mannwhitneyu(drtag_scores, iaag_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (DRTAG's Binary Weighting scores are better than IAAG's Binary Weighting scores): H={stat:.3f}, p={p:.4f}")
+delta_value, delta_magnitude = cliffs_delta(drtag_scores, iaag_scores)
+conclusions.append("DRTAG's Binary Weighting scores are better than IAAG's Binary Weighting scores")
+conclusions.append(f"Mann-Whitney U Test: H={stat:.3f}, p={p:.4f}")
+conclusions.append(f"Cliff's Delta: {delta_value:.3f} ({delta_magnitude})")
 if p < standardSignificanceLevel:
     conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG contains more keywords relavant to the scenario than discussions generated using IAAG.")
 else:

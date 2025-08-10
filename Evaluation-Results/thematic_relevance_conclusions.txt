@@ -1,9 +1,15 @@
-Mann-Whitney U Test (DRTAG's Thematic Relevance scores are better than Autogen's Thematic Relevance scores): H=626.000, p=0.0047
+DRTAG's Thematic Relevance scores are better than Autogen's Thematic Relevance scores
+Mann-Whitney U Test: H=626.000, p=0.0047
+Cliff's Delta: 0.391 (medium)
 Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG are more thematically relavant to the scenario than discussions generated using Autogen.
 
-Mann-Whitney U Test (IAAG's Thematic Relevance scores are better than Autogen's Thematic Relevance scores): H=567.000, p=0.0425
+IAAG's Thematic Relevance scores are better than Autogen's Thematic Relevance scores
+Mann-Whitney U Test: H=567.000, p=0.0425
+Cliff's Delta: 0.260 (small)
 Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG are more thematically relavant to the scenario than discussions generated using Autogen.
 
-Mann-Whitney U Test (DRTAG's Thematic Relevance scores are better than IAAG's Thematic Relevance scores): H=536.000, p=0.1031
+DRTAG's Thematic Relevance scores are better than IAAG's Thematic Relevance scores
+Mann-Whitney U Test (): H=536.000, p=0.1031
+Cliff's Delta: 0.191 (small)
 Conclusion: We fail to reject the null hypothesis. There is no statistically significant evidence to conclude that discussions generated using DRTAG are more thematically relavant to the scenario than discussions generated using IAAG.
 

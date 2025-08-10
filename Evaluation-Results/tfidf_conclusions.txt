@@ -1,9 +1,15 @@
-Mann-Whitney U Test (DRTAG's TF-IDF scores are better than Autogen's TF-IDF scores): H=818.000, p=0.0000
+DRTAG's TF-IDF scores are better than Autogen's TF-IDF scores
+Mann-Whitney U Test: H=818.000, p=0.0000
+Cliff's Delta: 0.818 (large)
 Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG has utilized domain-specific terminologies more than discussions generated using Autogen.
 
-Mann-Whitney U Test (IAAG's TF-IDF scores are better than Autogen's TF-IDF scores): H=712.000, p=0.0001
+IAAG's TF-IDF scores are better than Autogen's TF-IDF scores
+Mann-Whitney U Test: H=712.000, p=0.0001
+Cliff's Delta: 0.582 (large)
 Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG has utilized domain-specific terminologies more than discussions generated using Autogen.
 
-Mann-Whitney U Test (DRTAG's TF-IDF scores are better than IAAG's TF-IDF scores): H=577.000, p=0.0307
+DRTAG's TF-IDF scores are better than IAAG's TF-IDF scores
+Mann-Whitney U Test: H=577.000, p=0.0307
+Cliff's Delta: 0.282 (small)
 Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG has utilized domain-specific terminologies more than discussions generated using IAAG.
 

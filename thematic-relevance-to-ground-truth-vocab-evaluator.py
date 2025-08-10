@@ -66,9 +66,8 @@ print("Thematic relevance to ground truth vocabulary graph is plotted successful
 
 
 # Statistical analysis with Mann-Whitney U rank test on thematic relevance scores
-import numpy as np
 from scipy.stats import mannwhitneyu
-import scikit_posthocs as sp
+from cliffs_delta import cliffs_delta
 
 standardSignificanceLevel = 0.05
 conclusions = []
@@ -90,7 +89,10 @@ iaag_scores = [score for label, score in thematic_relevance_scores.items() if "I
 
 # Mann-Whitney U rank test to check if DRTAG is better than Autogen
 stat, p = mannwhitneyu(drtag_scores, autogen_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (DRTAG's Thematic Relevance scores are better than Autogen's Thematic Relevance scores): H={stat:.3f}, p={p:.4f}")
+delta_value, delta_magnitude = cliffs_delta(drtag_scores, autogen_scores)
+conclusions.append("DRTAG's Thematic Relevance scores are better than Autogen's Thematic Relevance scores")
+conclusions.append(f"Mann-Whitney U Test: H={stat:.3f}, p={p:.4f}")
+conclusions.append(f"Cliff's Delta: {delta_value:.3f} ({delta_magnitude})")
 if p < standardSignificanceLevel:
     conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG are more thematically relavant to the scenario than discussions generated using Autogen.")
 else:
@@ -99,7 +101,10 @@ conclusions.append("")
 
 # Mann-Whitney U rank test to check if IAAG is better than Autogen
 stat, p = mannwhitneyu(iaag_scores, autogen_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (IAAG's Thematic Relevance scores are better than Autogen's Thematic Relevance scores): H={stat:.3f}, p={p:.4f}")
+delta_value, delta_magnitude = cliffs_delta(iaag_scores, autogen_scores)
+conclusions.append("IAAG's Thematic Relevance scores are better than Autogen's Thematic Relevance scores")
+conclusions.append(f"Mann-Whitney U Test: H={stat:.3f}, p={p:.4f}")
+conclusions.append(f"Cliff's Delta: {delta_value:.3f} ({delta_magnitude})")
 if p < standardSignificanceLevel:
     conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG are more thematically relavant to the scenario than discussions generated using Autogen.")
 else:
@@ -108,7 +113,10 @@ conclusions.append("")
 
 # Mann-Whitney U rank test to check if DRTAG is better than IAAG
 stat, p = mannwhitneyu(drtag_scores, iaag_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (DRTAG's Thematic Relevance scores are better than IAAG's Thematic Relevance scores): H={stat:.3f}, p={p:.4f}")
+delta_value, delta_magnitude = cliffs_delta(drtag_scores, iaag_scores)
+conclusions.append("DRTAG's Thematic Relevance scores are better than IAAG's Thematic Relevance scores")
+conclusions.append(f"Mann-Whitney U Test (): H={stat:.3f}, p={p:.4f}")
+conclusions.append(f"Cliff's Delta: {delta_value:.3f} ({delta_magnitude})")
 if p < standardSignificanceLevel:
     conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG are more thematically relavant to the scenario than discussions generated using IAAG.")
 else:

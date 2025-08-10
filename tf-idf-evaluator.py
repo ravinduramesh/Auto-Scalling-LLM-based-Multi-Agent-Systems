@@ -88,9 +88,8 @@ print("TF-IDF sums are saved as tfidfSumsOfConversations.png.")
 
 
 # Statistical analysis with Mann-Whitney U rank test on tf-idf summasion scores
-import numpy as np
 from scipy.stats import mannwhitneyu
-import scikit_posthocs as sp
+from cliffs_delta import cliffs_delta
 
 standardSignificanceLevel = 0.05
 conclusions = []
@@ -117,7 +116,10 @@ iaag_scores = [score for label, score in tfidf_score_sums.items() if "IAAG" in l
 
 # Mann-Whitney U rank test to check if DRTAG is better than Autogen
 stat, p = mannwhitneyu(drtag_scores, autogen_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (DRTAG's TF-IDF scores are better than Autogen's TF-IDF scores): H={stat:.3f}, p={p:.4f}")
+delta_value, delta_magnitude = cliffs_delta(drtag_scores, autogen_scores)
+conclusions.append("DRTAG's TF-IDF scores are better than Autogen's TF-IDF scores")
+conclusions.append(f"Mann-Whitney U Test: H={stat:.3f}, p={p:.4f}")
+conclusions.append(f"Cliff's Delta: {delta_value:.3f} ({delta_magnitude})")
 if p < standardSignificanceLevel:
     conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG has utilized domain-specific terminologies more than discussions generated using Autogen.")
 else:
@@ -126,7 +128,10 @@ conclusions.append("")
 
 # Mann-Whitney U rank test to check if IAAG is better than Autogen
 stat, p = mannwhitneyu(iaag_scores, autogen_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (IAAG's TF-IDF scores are better than Autogen's TF-IDF scores): H={stat:.3f}, p={p:.4f}")
+delta_value, delta_magnitude = cliffs_delta(iaag_scores, autogen_scores)
+conclusions.append("IAAG's TF-IDF scores are better than Autogen's TF-IDF scores")
+conclusions.append(f"Mann-Whitney U Test: H={stat:.3f}, p={p:.4f}")
+conclusions.append(f"Cliff's Delta: {delta_value:.3f} ({delta_magnitude})")
 if p < standardSignificanceLevel:
     conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using IAAG has utilized domain-specific terminologies more than discussions generated using Autogen.")
 else:
@@ -135,7 +140,10 @@ conclusions.append("")
 
 # Mann-Whitney U rank test to check if DRTAG is better than IAAG
 stat, p = mannwhitneyu(drtag_scores, iaag_scores, alternative='greater')
-conclusions.append(f"Mann-Whitney U Test (DRTAG's TF-IDF scores are better than IAAG's TF-IDF scores): H={stat:.3f}, p={p:.4f}")
+delta_value, delta_magnitude = cliffs_delta(drtag_scores, iaag_scores)
+conclusions.append("DRTAG's TF-IDF scores are better than IAAG's TF-IDF scores")
+conclusions.append(f"Mann-Whitney U Test: H={stat:.3f}, p={p:.4f}")
+conclusions.append(f"Cliff's Delta: {delta_value:.3f} ({delta_magnitude})")
 if p < standardSignificanceLevel:
     conclusions.append("Conclusion: We reject the null hypothesis. There is statistically significant evidence to conclude that discussions generated using DRTAG has utilized domain-specific terminologies more than discussions generated using IAAG.")
 else:
