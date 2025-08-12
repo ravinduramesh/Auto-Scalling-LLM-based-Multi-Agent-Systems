@@ -1,0 +1,2 @@
+Correlation between thematic relevance and TF-IDF sum: 0.34
+There is a weak correlation between thematic relevance and TF-IDF sum.

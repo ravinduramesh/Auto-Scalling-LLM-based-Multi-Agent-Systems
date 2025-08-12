@@ -1,0 +1,2 @@
+Correlation between MTLD score and binary weight score for task-related content coverage: 0.58
+There is a strong correlation between MTLD score and binary weight score for task-related content coverage.
