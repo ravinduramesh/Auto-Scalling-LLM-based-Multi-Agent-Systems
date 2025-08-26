@@ -72,17 +72,16 @@ plt.xticks(rotation=90)
 plt.ylabel("TF-IDF Sums")
 plt.title("Summations of all keywords' TF-IDF values within each conversation")
 
-# Create legend
-legend_handles = []
-legend_labels = []
-color_map = {'Autogen': 'orangered', 'DRTAG': 'lawngreen', 'IAAG': 'dodgerblue'}
-for label in ['Autogen', 'DRTAG', 'IAAG']:
-    if label in labels:
-        legend_handles.append(plt.Rectangle((0,0),1,1, color=color_map[label]))
-        legend_labels.append(label)
-
-plt.legend(legend_handles, legend_labels, loc='upper right')
+# Add legend
+from matplotlib.patches import Patch
+legend_elements = [
+    Patch(facecolor='orangered', label='autogen'),
+    Patch(facecolor='lawngreen', label='DRTAG'),
+    Patch(facecolor='dodgerblue', label='IAAG')
+]
+plt.legend(handles=legend_elements, loc='upper right', title="Label Type")
 plt.tight_layout()
+
 plt.savefig("tfidfSumsOfConversations.png")
 print("TF-IDF sums are saved as tfidfSumsOfConversations.png.")
 

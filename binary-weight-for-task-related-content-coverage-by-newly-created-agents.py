@@ -39,14 +39,14 @@ sorted_scores = [item[1] for item in sorted_items]
 
 # Assign colors based on label type for legend
 barColors = []
-color_map = {"autogen": "orangered", "DRTAG": "lawngreen", "other": "dodgerblue"}
+color_map = {"autogen": "orangered", "DRTAG": "lawngreen", "IAAG": "dodgerblue"}
 for label in sorted_labels:
     if label.split("-")[1].startswith("autogen"):
         barColors.append(color_map["autogen"])
     elif label.split("-")[1].startswith("DRTAG"):
         barColors.append(color_map["DRTAG"])
     else:
-        barColors.append(color_map["other"])
+        barColors.append(color_map["IAAG"])
 
 plt.figure(figsize=(25, 12))
 plt.rcParams.update({'font.size': 15})
@@ -62,7 +62,7 @@ from matplotlib.patches import Patch
 legend_elements = [
     Patch(facecolor=color_map["autogen"], label='autogen'),
     Patch(facecolor=color_map["DRTAG"], label='DRTAG'),
-    Patch(facecolor=color_map["other"], label='other')
+    Patch(facecolor=color_map["IAAG"], label='IAAG')
 ]
 plt.legend(handles=legend_elements, loc='upper right', title="Label Type")
 
